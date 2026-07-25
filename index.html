@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#080b14" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="CK Life Engine" />
+<title>CK · Life Engine v5.3.1 · Desktop Cloud Fix</title>
+<style>
+:root{
+  --bg:#080b14;--panel:rgba(18,24,44,.94);--panel2:#11182b;--text:#f4f7ff;--muted:#99a5bf;
+  --line:#2b385b;--purple:#8b5cf6;--blue:#4f8cff;--green:#38d996;--gold:#ffca4b;--red:#ff667a;
+  --cyan:#4dd7ff;--orange:#ff9c4b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 12% 0%,rgba(101,76,210,.22),transparent 28%),radial-gradient(circle at 88% 10%,rgba(55,143,255,.14),transparent 25%),linear-gradient(180deg,#080b14 0%,#0b1020 48%,#080b14 100%)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.wrap{max-width:1240px;margin:0 auto;padding:26px 18px 72px}.header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}.title h1{margin:0;font-size:34px;letter-spacing:-.7px}.title p{margin:7px 0 0;color:var(--muted);line-height:1.6}.top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:1px solid transparent;border-radius:12px;padding:10px 14px;background:linear-gradient(135deg,var(--purple),#6d5dfc);color:#fff;font-weight:760;box-shadow:0 8px 24px rgba(104,84,255,.18)}.btn.secondary{background:#171f35;border-color:#2a375a;box-shadow:none;color:#d8e0f4}.btn.ghost{background:transparent;border-color:#303d61;box-shadow:none;color:#b9c5df}.btn.danger{background:#4a1e2b;border-color:#753245;box-shadow:none}.btn.small{padding:7px 10px;border-radius:10px;font-size:13px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.grid{display:grid;gap:16px}.grid.hero{grid-template-columns:1.02fr .98fr}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}.card{background:var(--panel);border:1px solid rgba(74,91,135,.38);border-radius:22px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25);backdrop-filter:blur(16px)}.card h2{margin:0 0 14px;font-size:21px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.section-title h2{margin:0}.tag{font-size:12px;color:#d8d4ff;background:rgba(139,92,246,.17);border:1px solid rgba(139,92,246,.3);padding:5px 9px;border-radius:999px}.muted{color:var(--muted)}
+.player{position:relative;overflow:hidden}.player:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-120px;top:-120px;background:radial-gradient(circle,rgba(255,202,75,.2),transparent 65%);pointer-events:none}.level-row{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}.level{font-size:32px;font-weight:900}.class-name{color:var(--gold);font-weight:800;margin-top:3px}.xp-text{font-weight:800}.bar{height:12px;background:#11182b;border:1px solid #243152;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;border-radius:999px;transition:width .65s cubic-bezier(.2,.9,.25,1)}.fill.overall{background:linear-gradient(90deg,#ffb52d,#ffe082);box-shadow:0 0 18px rgba(255,202,75,.35)}
+.resources{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.resource-pill{background:#11182b;border:1px solid #263457;border-radius:999px;padding:7px 11px;font-size:13px}.resource-pill b{color:var(--gold)}
+.attribute-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.attribute{padding:14px;background:#11182b;border:1px solid #253252;border-radius:15px}.attr-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:9px}.attr-name{font-weight:780}.attr-val{font-size:21px;font-weight:900}.attr-bar{height:9px;background:#0a1020;border-radius:99px;overflow:hidden}.attr-fill{height:100%;transition:width .55s ease;border-radius:99px}
+.task{background:#11182b;border:1px solid #273557;border-radius:16px;padding:14px;margin:10px 0;transition:.25s}.task:hover{transform:translateY(-1px);border-color:#3d4e79}.task.done{opacity:.52}.task-main{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.task-title{font-weight:840;font-size:16px}.task-meta{color:var(--muted);font-size:13px;margin-top:5px}.rewards{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.reward{font-size:12px;padding:5px 8px;border-radius:999px;background:rgba(255,202,75,.1);border:1px solid rgba(255,202,75,.23);color:#ffe39a}.reward.blue{background:rgba(77,215,255,.1);border-color:rgba(77,215,255,.2);color:#a9efff}.reward.green{background:rgba(56,217,150,.1);border-color:rgba(56,217,150,.2);color:#a6f1cf}.reward.purple{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.23);color:#d7c9ff}.task-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;min-width:128px}.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed #344160;border-radius:14px}
+.world-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.region{position:relative;min-height:150px;border-radius:18px;padding:16px;border:1px solid #304066;background:linear-gradient(160deg,#131b31,#0f1629);overflow:hidden}.region:after{content:"";position:absolute;inset:auto -35px -50px auto;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--accent-soft),transparent 65%)}.region h3{margin:0 0 7px;font-size:18px}.region p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:88%}.region .progress{position:absolute;left:16px;right:16px;bottom:14px}.region .mini{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+.boss-card{background:linear-gradient(155deg,#1b1524,#12182a);border:1px solid #493657;border-radius:18px;padding:16px;margin:10px 0}.boss-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.boss-name{font-size:18px;font-weight:900}.boss-status{font-size:12px;padding:5px 8px;border-radius:999px;background:#361c2b;color:#ffb5c0;border:1px solid #673048;display:inline-block;margin-top:7px}.winrate{font-size:29px;font-weight:950;color:var(--gold)}.delta{font-size:13px;color:#8ff0be}.battle-report{margin-top:12px;padding:12px 13px;border-left:3px solid var(--gold);background:#11182b;border-radius:0 12px 12px 0;color:#d8def0;line-height:1.65}.boss-history{max-height:420px;overflow:auto;padding-right:3px}.timeline{display:flex;gap:8px;align-items:center;margin-top:9px}.chance{font-weight:900;font-size:20px}.arrow{color:var(--muted)}.chance.after{color:#8cf1bc}
+.achievement-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.achievement{padding:13px;background:#11182b;border:1px solid #293759;border-radius:14px}.achievement.locked{filter:grayscale(1);opacity:.42}.achievement strong{display:block;margin-bottom:4px}.achievement span{font-size:12px;color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.form-grid .full{grid-column:1/-1}label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px}input,select,textarea{width:100%;background:#0d1426;color:#edf2ff;border:1px solid #2d3b61;border-radius:11px;padding:10px 11px;outline:none}input[type=color]{height:42px;padding:4px}input:focus,select:focus,textarea:focus{border-color:#6e67ff;box-shadow:0 0 0 3px rgba(110,103,255,.12)}textarea{resize:vertical;min-height:78px}
+.dynamic-rewards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:5px}.reward-input{display:grid;grid-template-columns:1fr 90px;gap:8px;align-items:center;padding:9px 10px;border:1px solid #293759;background:#10172a;border-radius:12px}.reward-input .name{font-size:13px;font-weight:760}.reward-input input{padding:7px 8px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,5,12,.76);display:none;align-items:center;justify-content:center;padding:18px;z-index:40;backdrop-filter:blur(7px)}.modal-backdrop.show{display:flex}.modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:#10172a;border:1px solid #35456f;border-radius:22px;padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.modal.wide{width:min(1040px,100%)}.modal h2{margin-top:0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.subsection{margin-top:18px;padding-top:18px;border-top:1px solid #283654}.settings-list{display:grid;gap:10px;margin-top:10px}.setting-row{display:grid;grid-template-columns:60px 1.1fr 1.8fr 100px 48px;gap:8px;align-items:center;padding:10px;background:#0d1426;border:1px solid #293759;border-radius:14px}.setting-row.attribute-row{grid-template-columns:60px 1.25fr 100px 90px 48px}.setting-row input{padding:8px}.setting-row .delete-x{width:42px;height:42px;padding:0}.settings-hint{font-size:12px;color:var(--muted);line-height:1.65}.quick-add{display:flex;gap:8px;align-items:center;margin-top:8px}.quick-add .btn{white-space:nowrap}
+.engine-grid,.inventory-grid,.skill-grid,.bestiary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.event-box textarea{margin-top:10px}.event-preview{display:none;margin-top:12px;padding:14px;background:#0e1628;border:1px solid #314166;border-radius:15px}.event-preview.show{display:block}.event-preview h3{margin:0 0 7px}.event-stats{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.item-card,.skill-card,.bestiary-card{padding:14px;background:#11182b;border:1px solid #293759;border-radius:15px}.item-card strong,.skill-card strong,.bestiary-card strong{display:block;margin-bottom:5px}.item-card span,.skill-card span,.bestiary-card span{font-size:12px;color:var(--muted);line-height:1.6}.item-icon{font-size:24px;margin-bottom:7px}.skill-card.locked{opacity:.42;filter:grayscale(1)}.skill-card.unlocked{border-color:rgba(255,202,75,.45);box-shadow:inset 0 0 24px rgba(255,202,75,.04)}.boss-meter{height:7px;background:#0b1020;border-radius:99px;overflow:hidden;margin-top:9px}.boss-meter>div{height:100%;background:linear-gradient(90deg,#ff667a,#ffca4b);border-radius:99px}
+.toast{position:fixed;right:18px;bottom:18px;z-index:80;background:#151d32;border:1px solid #3a4c79;border-radius:14px;padding:12px 15px;box-shadow:0 18px 50px rgba(0,0,0,.35);transform:translateY(130px);opacity:0;transition:.32s;max-width:min(420px,calc(100vw - 36px))}.toast.show{transform:translateY(0);opacity:1}#fxLayer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}.xp-float{position:fixed;font-weight:950;color:var(--gold);text-shadow:0 0 18px rgba(255,202,75,.6);animation:floatXP 1.35s ease-out forwards}.spark{position:fixed;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold);animation:spark 1s ease-out forwards}@keyframes floatXP{0%{opacity:0;transform:translateY(12px) scale(.85)}15%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.15)}}@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}.levelup{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(255,202,75,.18),rgba(5,7,13,.9) 55%)}.levelup.show{display:flex}.levelup-box{text-align:center;animation:pop .6s cubic-bezier(.2,1.4,.25,1)}.levelup-box .gold{font-size:18px;color:#ffe397;letter-spacing:4px;font-weight:900}.levelup-box h1{font-size:58px;margin:10px 0;color:#fff3c4;text-shadow:0 0 30px rgba(255,202,75,.7)}.levelup-box p{color:#f7ddb0;font-size:18px}@keyframes pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
+.footer{text-align:center;color:#66728f;font-size:12px;margin-top:24px}.save-note{padding:10px 12px;background:rgba(56,217,150,.07);border:1px solid rgba(56,217,150,.2);border-radius:12px;color:#baf3d8;font-size:13px;line-height:1.6}.save-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border-radius:12px;font-size:13px;border:1px solid #314166;background:#0d1426}.save-dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--gold);box-shadow:0 0 10px rgba(255,202,75,.45)}.save-status.backed .save-dot{background:var(--green);box-shadow:0 0 10px rgba(56,217,150,.5)}.save-status .status-main{font-weight:800}.save-status .status-sub{color:var(--muted)}
+@media(max-width:900px){.grid.hero,.grid.two,.engine-grid{grid-template-columns:1fr}.world-map,.attribute-grid,.achievement-grid,.inventory-grid,.skill-grid,.bestiary-grid,.dynamic-rewards{grid-template-columns:1fr}.setting-row,.setting-row.attribute-row{grid-template-columns:54px 1fr}.setting-row .wide-field{grid-column:1/-1}.header{flex-direction:column}.top-actions{justify-content:flex-start}.task-main{flex-direction:column}.task-actions{justify-content:flex-start}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
+
+/* ===== Life Engine v4 · 100-Level Open World ===== */
+.era-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px}
+.era-badge,.milestone-badge{font-size:12px;padding:5px 9px;border-radius:999px;border:1px solid rgba(255,202,75,.28);background:rgba(255,202,75,.09);color:#ffe39a}
+.milestone-badge{border-color:rgba(77,215,255,.25);background:rgba(77,215,255,.08);color:#b9f2ff}
+.level-philosophy{margin-top:13px;padding:12px 14px;border-left:3px solid rgba(255,202,75,.7);background:rgba(255,202,75,.055);border-radius:0 12px 12px 0;color:#e8e2d5;line-height:1.7;font-size:13px}
+.life-path-card{overflow:hidden;position:relative}
+.life-path-card:after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-170px;bottom:-190px;background:radial-gradient(circle,rgba(77,215,255,.11),transparent 65%);pointer-events:none}
+.life-path-summary{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:16px}
+.life-path-current,.life-path-next{padding:15px;border:1px solid #2e3c61;background:#0e1628;border-radius:16px}
+.life-path-current strong,.life-path-next strong{display:block;font-size:17px;margin-bottom:5px}
+.life-path-current p,.life-path-next p{margin:0;color:var(--muted);line-height:1.65;font-size:13px}
+.era-track{display:grid;grid-template-columns:repeat(10,minmax(120px,1fr));gap:8px;overflow-x:auto;padding:4px 1px 10px}
+.era-node{min-width:120px;padding:11px;border:1px solid #2a3759;background:#0d1426;border-radius:14px;position:relative;transition:.25s}
+.era-node .era-levels{font-size:11px;color:#7f8aa7}
+.era-node strong{display:block;margin:5px 0 4px;font-size:13px}
+.era-node span{font-size:11px;color:var(--muted);line-height:1.5}
+.era-node.passed{border-color:rgba(56,217,150,.33);background:rgba(56,217,150,.055)}
+.era-node.current{border-color:rgba(255,202,75,.7);box-shadow:0 0 0 1px rgba(255,202,75,.12),0 0 24px rgba(255,202,75,.08);transform:translateY(-2px)}
+.era-node.future{opacity:.55}
+.era-node .node-state{position:absolute;right:8px;top:8px;font-size:11px}
+.endgame-vision{margin-top:6px;padding:18px;border:1px solid rgba(139,92,246,.35);background:linear-gradient(135deg,rgba(139,92,246,.09),rgba(77,215,255,.05));border-radius:18px;line-height:1.8;color:#dddaf4}
+.endgame-vision strong{color:#fff1bd}
+.endgame-vision .endgame-title{font-size:19px;font-weight:900;color:#fff3c4;margin-bottom:6px}
+.endgame-vision.open{border-color:rgba(255,202,75,.65);box-shadow:0 0 34px rgba(255,202,75,.08)}
+.levelup-box{max-width:min(680px,calc(100vw - 36px));padding:28px}
+.levelup-era{font-size:14px;color:#b9f2ff;font-weight:800;margin-top:2px}
+.levelup-name{font-size:25px;color:#ffe39a;font-weight:900;margin:7px 0}
+.levelup-message{color:#f1e7d4;font-size:17px;line-height:1.8;max-width:620px;margin:0 auto 12px}
+@media(max-width:900px){.life-path-summary{grid-template-columns:1fr}.era-track{grid-template-columns:repeat(10,140px)}}
+
+
+/* ===== v5 Cloud World ===== */
+.cloud-btn{position:relative}
+.cloud-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#77839c;margin-right:6px;vertical-align:1px}
+.cloud-dot.synced{background:#38d996;box-shadow:0 0 10px rgba(56,217,150,.65)}
+.cloud-dot.syncing{background:#ffca4b;box-shadow:0 0 10px rgba(255,202,75,.55)}
+.cloud-dot.error,.cloud-dot.conflict{background:#ff667a;box-shadow:0 0 10px rgba(255,102,122,.55)}
+.cloud-dot.pending{background:#4dd7ff;box-shadow:0 0 10px rgba(77,215,255,.55)}
+.cloud-panel{display:grid;gap:12px}
+.cloud-state-card{padding:14px 15px;border:1px solid #2f3e63;background:#0d1426;border-radius:15px;line-height:1.65}
+.cloud-state-card strong{display:block;margin-bottom:4px}
+.cloud-state-card .tiny{font-size:12px;color:var(--muted)}
+.cloud-actions{display:flex;gap:8px;flex-wrap:wrap}
+.cloud-warning{padding:12px 14px;border-radius:14px;background:rgba(255,202,75,.08);border:1px solid rgba(255,202,75,.25);color:#f5e2aa;line-height:1.65;font-size:13px}
+.cloud-good{padding:12px 14px;border-radius:14px;background:rgba(56,217,150,.07);border:1px solid rgba(56,217,150,.23);color:#b8f5d7;line-height:1.65;font-size:13px}
+.cloud-conflict-box{padding:15px;border:1px solid rgba(255,102,122,.4);background:rgba(255,102,122,.07);border-radius:16px;line-height:1.7}
+.cloud-conflict-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.cloud-version{padding:12px;border-radius:13px;background:#0d1426;border:1px solid #314166}
+.cloud-version strong{display:block;margin-bottom:5px}
+@media(max-width:700px){.cloud-conflict-grid{grid-template-columns:1fr}}
+
+
+/* ===== v5.1 iPhone Edition ===== */
+:root{
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+}
+.mobile-only{display:none}
+.mobile-bottom-nav{display:none}
+.mobile-action-sheet{display:none}
+.mobile-view-chip{display:none}
+body.mobile-sheet-open{overflow:hidden}
+
+@media(max-width:760px){
+  html{scroll-padding-top:76px}
+  body{
+    min-height:100dvh;
+    background:
+      radial-gradient(circle at 15% -5%,rgba(101,76,210,.24),transparent 30%),
+      radial-gradient(circle at 95% 8%,rgba(55,143,255,.14),transparent 24%),
+      linear-gradient(180deg,#080b14 0%,#0b1020 55%,#080b14 100%);
+    -webkit-tap-highlight-color:transparent;
+    overscroll-behavior-y:none;
+  }
+  button,input,select,textarea{font-size:16px}
+  button,.btn{touch-action:manipulation}
+  .mobile-only{display:block}
+  .wrap{
+    width:100%;
+    max-width:none;
+    padding:
+      calc(12px + var(--safe-top))
+      calc(12px + var(--safe-right))
+      calc(104px + var(--safe-bottom))
+      calc(12px + var(--safe-left));
+  }
+
+  /* Compact app header */
+  .header{
+    position:sticky;
+    top:0;
+    z-index:25;
+    margin:-12px -12px 12px;
+    padding:
+      calc(10px + var(--safe-top))
+      calc(12px + var(--safe-right))
+      10px
+      calc(12px + var(--safe-left));
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:linear-gradient(180deg,rgba(8,11,20,.97),rgba(8,11,20,.90));
+    border-bottom:1px solid rgba(74,91,135,.3);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+  }
+  .title{min-width:0}
+  .title h1{font-size:19px;letter-spacing:-.3px;white-space:nowrap}
+  .title p{display:none}
+  .header>.top-actions{
+    display:flex;
+    flex:0 0 auto;
+    width:auto;
+    gap:0;
+  }
+  .header>.top-actions>button{display:none}
+  .header>.top-actions>#cloudStatusBtn{
+    display:inline-flex;
+    min-height:38px;
+    max-width:150px;
+    padding:8px 10px;
+    border-radius:999px;
+    font-size:12px;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  #cloudStatusText{
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Mobile views */
+  [data-mobile-view]{display:none!important}
+  [data-mobile-view].mobile-view-active{display:grid!important}
+  section.card[data-mobile-view].mobile-view-active{display:block!important}
+  .footer[data-mobile-view].mobile-view-active{display:block!important}
+
+  .grid,.grid.hero,.grid.two,.grid.three,.engine-grid{
+    grid-template-columns:1fr;
+    gap:11px;
+  }
+  .card{
+    padding:15px;
+    border-radius:18px;
+    box-shadow:0 12px 34px rgba(0,0,0,.22);
+  }
+  .card h2{font-size:18px}
+  .section-title{
+    align-items:flex-start;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+  }
+  .section-title h2{font-size:18px;line-height:1.35}
+  .tag{font-size:11px;padding:4px 7px}
+  .btn{
+    min-height:44px;
+    padding:10px 13px;
+    border-radius:13px;
+  }
+  .btn.small{min-height:40px;padding:8px 11px;font-size:14px}
+  input,select,textarea{
+    min-height:48px;
+    border-radius:13px;
+    padding:12px;
+    font-size:16px!important; /* prevents iOS Safari auto zoom */
+  }
+  textarea{min-height:110px}
+  label{font-size:13px}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid .full{grid-column:auto}
+  .dynamic-rewards{grid-template-columns:1fr}
+  .reward-input{grid-template-columns:1fr 86px}
+
+  /* Player card */
+  .level-row{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:10px;
+  }
+  .level-row>div:last-child{text-align:left!important}
+  .level{font-size:38px;line-height:1}
+  .class-name{font-size:16px;margin-top:6px}
+  .xp-text{font-size:15px}
+  .era-line{gap:6px}
+  .era-badge,.milestone-badge{font-size:11px;padding:5px 8px}
+  .level-philosophy{font-size:13px;padding:11px 12px;line-height:1.65}
+  .resources{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .resource-pill{
+    border-radius:13px;
+    padding:9px 10px;
+    text-align:center;
+  }
+  .attribute-grid,.world-map,.achievement-grid,.inventory-grid,.skill-grid,.bestiary-grid{
+    grid-template-columns:1fr;
+  }
+  .attribute{padding:13px}
+  .region{min-height:142px}
+  .task{padding:13px}
+  .task-main{flex-direction:column;gap:10px}
+  .task-actions{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:100%;
+    min-width:0;
+    gap:8px;
+  }
+  .task-actions .btn{width:100%}
+  .boss-top{gap:8px}
+  .winrate{font-size:25px}
+  .battle-report{font-size:14px;line-height:1.72}
+
+  /* Era track feels like horizontally swiping game chapters */
+  .life-path-card{overflow:hidden}
+  .life-path-summary{grid-template-columns:1fr;gap:9px}
+  .life-path-current,.life-path-next{padding:13px}
+  .era-track{
+    display:flex;
+    gap:9px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding:4px 2px 13px;
+    margin-right:-15px;
+    padding-right:18px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .era-node{
+    flex:0 0 148px;
+    min-width:148px;
+    scroll-snap-align:start;
+  }
+  .endgame-vision{padding:15px;font-size:14px;line-height:1.75}
+  .endgame-vision .endgame-title{font-size:18px}
+
+  /* Storage/actions */
+  .top-actions{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .top-actions .btn{width:100%}
+  .save-status{align-items:flex-start}
+  .save-status .status-sub{width:100%;padding-left:17px}
+
+  /* iPhone modal = bottom sheet */
+  .modal-backdrop{
+    align-items:flex-end;
+    justify-content:center;
+    padding:0;
+    padding-left:var(--safe-left);
+    padding-right:var(--safe-right);
+    background:rgba(2,5,12,.70);
+  }
+  .modal{
+    width:100%!important;
+    max-width:none!important;
+    max-height:calc(94dvh - var(--safe-top));
+    border-radius:24px 24px 0 0;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    padding:19px 15px calc(18px + var(--safe-bottom));
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal:before{
+    content:"";
+    display:block;
+    width:42px;height:5px;border-radius:999px;
+    background:#43506d;
+    margin:-7px auto 15px;
+  }
+  .modal-actions{
+    position:sticky;
+    bottom:calc(-18px - var(--safe-bottom));
+    z-index:4;
+    margin:18px -15px calc(-18px - var(--safe-bottom));
+    padding:12px 15px calc(12px + var(--safe-bottom));
+    background:linear-gradient(180deg,rgba(16,23,42,.92),#10172a 28%);
+    border-top:1px solid #283654;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .modal-actions .btn{width:100%}
+  .setting-row,.setting-row.attribute-row{
+    grid-template-columns:52px 1fr!important;
+    gap:8px;
+  }
+  .setting-row>*:not(:first-child):not(:last-child){grid-column:2}
+  .setting-row .delete-x{grid-column:1/-1;width:100%;height:40px}
+  .quick-add{align-items:stretch;flex-direction:column}
+  .cloud-actions{display:grid;grid-template-columns:1fr}
+  .cloud-actions .btn{width:100%}
+  .cloud-conflict-grid{grid-template-columns:1fr}
+
+  /* Toast sits above bottom navigation */
+  .toast{
+    left:12px;
+    right:12px;
+    bottom:calc(86px + var(--safe-bottom));
+    max-width:none;
+    border-radius:16px;
+  }
+  .levelup-box{padding:24px 18px}
+  .levelup-box h1{font-size:48px}
+  .levelup-message{font-size:16px}
+
+  /* Fixed bottom navigation */
+  .mobile-bottom-nav{
+    position:fixed;
+    z-index:60;
+    left:0;right:0;bottom:0;
+    display:grid;
+    grid-template-columns:1fr 1fr 1.12fr 1fr 1fr;
+    align-items:end;
+    padding:
+      7px
+      calc(8px + var(--safe-right))
+      calc(7px + var(--safe-bottom))
+      calc(8px + var(--safe-left));
+    background:rgba(9,13,25,.94);
+    border-top:1px solid rgba(71,88,130,.48);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+  }
+  .mobile-nav-btn{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:#8591ad;
+    min-height:50px;
+    padding:5px 2px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    font-size:10px;
+    font-weight:750;
+  }
+  .mobile-nav-btn .ico{font-size:20px;line-height:1}
+  .mobile-nav-btn.active{color:#f1e5bc}
+  .mobile-nav-btn.primary{
+    width:58px;height:58px;min-height:58px;
+    justify-self:center;
+    transform:translateY(-13px);
+    border-radius:19px;
+    color:#fff;
+    background:linear-gradient(145deg,#8b5cf6,#4f8cff);
+    box-shadow:0 10px 30px rgba(83,91,255,.38);
+    border:1px solid rgba(255,255,255,.15);
+  }
+  .mobile-nav-btn.primary .ico{font-size:27px}
+  .mobile-nav-btn.primary span:last-child{display:none}
+
+  /* Quick action sheet */
+  .mobile-action-sheet{
+    position:fixed;
+    inset:0;
+    z-index:75;
+    display:none;
+    align-items:flex-end;
+    background:rgba(2,5,12,.64);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  .mobile-action-sheet.show{display:flex}
+  .mobile-action-panel{
+    width:100%;
+    padding:10px 14px calc(18px + var(--safe-bottom));
+    border-radius:26px 26px 0 0;
+    border-top:1px solid #35456f;
+    background:#10172a;
+    box-shadow:0 -24px 70px rgba(0,0,0,.45);
+  }
+  .mobile-action-handle{
+    width:42px;height:5px;border-radius:99px;background:#43506d;margin:1px auto 14px;
+  }
+  .mobile-action-title{font-size:19px;font-weight:900;margin-bottom:12px}
+  .mobile-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mobile-action-card{
+    min-height:92px;
+    border-radius:17px;
+    border:1px solid #2d3b61;
+    background:#121a30;
+    color:#eef3ff;
+    padding:13px;
+    text-align:left;
+    box-shadow:none;
+  }
+  .mobile-action-card b{display:block;font-size:15px;margin:7px 0 3px}
+  .mobile-action-card span{display:block;color:var(--muted);font-size:11px;line-height:1.45}
+  .mobile-action-card .action-ico{font-size:24px}
+  .mobile-action-cancel{
+    width:100%;margin-top:10px;
+    background:#171f35;border:1px solid #2a375a;color:#d8e0f4;
+  }
+
+  .footer{padding-bottom:8px}
+}
+
+@media(min-width:761px){
+  [data-mobile-view]{display:grid}
+  section.card[data-mobile-view]{display:block}
+  .footer[data-mobile-view]{display:block}
+}
+
+
+/* ===== v5.2 Dual Progression: Power Level × Life Realm ===== */
+.dual-system-note{
+  margin-top:10px;
+  padding:11px 13px;
+  border:1px solid rgba(77,215,255,.18);
+  background:rgba(77,215,255,.045);
+  border-radius:14px;
+  color:#b9c7e6;
+  font-size:12px;
+  line-height:1.65;
+}
+.realm-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 92% 8%,rgba(77,215,255,.10),transparent 27%),
+    radial-gradient(circle at 8% 100%,rgba(139,92,246,.10),transparent 30%),
+    linear-gradient(145deg,#10172a,#0d1425);
+}
+.realm-card:after{
+  content:"";
+  position:absolute;
+  width:240px;height:240px;border-radius:50%;
+  right:-145px;top:-145px;
+  border:1px solid rgba(77,215,255,.12);
+  box-shadow:0 0 70px rgba(77,215,255,.05);
+  pointer-events:none;
+}
+.realm-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+}
+.realm-rank{
+  font-size:13px;
+  color:#91a0c2;
+  font-weight:800;
+  letter-spacing:.7px;
+}
+.realm-name{
+  font-size:28px;
+  line-height:1.15;
+  font-weight:950;
+  color:#d8f7ff;
+  margin:5px 0 4px;
+}
+.realm-desc{
+  color:#c8d1e6;
+  line-height:1.72;
+  font-size:13px;
+  max-width:760px;
+}
+.realm-points{
+  min-width:110px;
+  text-align:right;
+  font-size:12px;
+  color:#8390ae;
+}
+.realm-points strong{
+  display:block;
+  color:#baf3ff;
+  font-size:22px;
+  margin-top:2px;
+}
+.realm-progress-wrap{margin-top:14px}
+.realm-fill{
+  height:100%;
+  width:0;
+  border-radius:999px;
+  background:linear-gradient(90deg,#4dd7ff,#8b5cf6);
+  box-shadow:0 0 16px rgba(77,215,255,.22);
+  transition:width .45s ease;
+}
+.realm-next{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:13px;
+}
+.realm-panel{
+  border:1px solid #2c3a5f;
+  background:rgba(8,13,26,.58);
+  border-radius:15px;
+  padding:13px;
+}
+.realm-panel strong{display:block;margin-bottom:5px}
+.realm-panel p{margin:0;color:#9aa7c4;font-size:12px;line-height:1.6}
+.realm-requirements{
+  display:grid;
+  gap:7px;
+  margin-top:10px;
+}
+.realm-req{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  padding:9px 10px;
+  border:1px solid #273655;
+  border-radius:12px;
+  background:#0b1223;
+  color:#aeb8cf;
+  font-size:12px;
+  line-height:1.5;
+}
+.realm-req.done{
+  border-color:rgba(56,217,150,.25);
+  background:rgba(56,217,150,.055);
+  color:#baf2d7;
+}
+.realm-req .req-mark{flex:0 0 auto;font-size:14px}
+.realm-insight-list{
+  display:grid;
+  gap:8px;
+  margin-top:10px;
+}
+.realm-insight{
+  padding:10px 11px;
+  border-left:3px solid rgba(77,215,255,.5);
+  background:rgba(77,215,255,.04);
+  border-radius:0 12px 12px 0;
+}
+.realm-insight strong{display:block;font-size:12px;margin-bottom:3px}
+.realm-insight p{margin:0;color:#929fbc;font-size:11px;line-height:1.55}
+.realm-insight-meta{margin-top:5px;color:#687695;font-size:10px}
+.realm-philosophy{
+  margin-top:12px;
+  font-size:12px;
+  line-height:1.68;
+  color:#d5c7ef;
+  padding:11px 12px;
+  border-radius:13px;
+  border:1px solid rgba(139,92,246,.22);
+  background:rgba(139,92,246,.055);
+}
+.realm-track{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 1px 8px;
+  margin-top:12px;
+  -webkit-overflow-scrolling:touch;
+}
+.realm-node{
+  flex:0 0 120px;
+  padding:10px;
+  border:1px solid #293756;
+  background:#0a1120;
+  border-radius:13px;
+  opacity:.5;
+}
+.realm-node strong{display:block;font-size:12px;margin:4px 0}
+.realm-node span{font-size:10px;color:#7986a3}
+.realm-node.done{opacity:.82;border-color:rgba(56,217,150,.25)}
+.realm-node.current{
+  opacity:1;
+  border-color:rgba(77,215,255,.58);
+  box-shadow:0 0 18px rgba(77,215,255,.08);
+}
+.insight-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+.insight-point-btn{
+  min-height:52px;
+  border-radius:13px;
+  border:1px solid #304066;
+  background:#10182c;
+  color:#dfe7fa;
+  font-weight:850;
+}
+.insight-point-btn.active{
+  border-color:#4dd7ff;
+  color:#c8f8ff;
+  background:rgba(77,215,255,.10);
+  box-shadow:0 0 0 1px rgba(77,215,255,.08);
+}
+.realm-help{
+  padding:11px 12px;
+  border-radius:13px;
+  border:1px solid rgba(255,202,75,.22);
+  background:rgba(255,202,75,.055);
+  color:#e6d49f;
+  line-height:1.65;
+  font-size:12px;
+}
+.mobile-action-card.full-action{grid-column:1/-1;min-height:78px}
+
+@media(max-width:760px){
+  .realm-head{flex-direction:column;gap:8px}
+  .realm-points{text-align:left;min-width:0}
+  .realm-name{font-size:25px}
+  .realm-next{grid-template-columns:1fr}
+  .realm-panel{padding:12px}
+  .insight-choice-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .insight-point-btn{padding:7px 3px;font-size:12px}
+}
+
+
+/* ===== v5.2 Desktop Command Edition ===== */
+:root{
+  --desktop-rail:224px;
+  --desktop-max:1540px;
+}
+body{
+  background:
+    radial-gradient(circle at 10% -10%,rgba(77,215,255,.075),transparent 27%),
+    radial-gradient(circle at 92% 8%,rgba(139,92,246,.08),transparent 30%),
+    #080b14;
+}
+.wrap{
+  max-width:var(--desktop-max);
+  padding:28px 28px 90px;
+}
+.desktop-edition-label{
+  display:inline-flex;
+  vertical-align:6px;
+  margin-left:8px;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid rgba(77,215,255,.28);
+  background:rgba(77,215,255,.07);
+  color:#aeefff;
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:900;
+}
+.desktop-sidebar{
+  display:none;
+  position:fixed;
+  z-index:25;
+  left:18px;
+  top:18px;
+  bottom:18px;
+  width:var(--desktop-rail);
+  padding:16px;
+  border-radius:22px;
+  border:1px solid rgba(72,91,137,.42);
+  background:rgba(11,16,30,.91);
+  box-shadow:0 24px 80px rgba(0,0,0,.36);
+  backdrop-filter:blur(22px);
+  overflow:auto;
+}
+.desktop-sidebar-brand{
+  padding:10px 10px 15px;
+  border-bottom:1px solid #263351;
+  margin-bottom:11px;
+}
+.desktop-sidebar-brand strong{
+  display:block;
+  font-size:17px;
+}
+.desktop-sidebar-brand span{
+  display:block;
+  margin-top:5px;
+  color:#7f8dab;
+  font-size:10px;
+  line-height:1.55;
+  letter-spacing:.6px;
+}
+.desktop-side-nav{display:grid;gap:5px}
+.desktop-side-nav a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:40px;
+  padding:9px 10px;
+  color:#aab6d1;
+  text-decoration:none;
+  border:1px solid transparent;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:750;
+}
+.desktop-side-nav a:hover{
+  color:#eef4ff;
+  border-color:#304267;
+  background:#121b31;
+}
+.desktop-side-footer{
+  margin-top:15px;
+  padding:12px 10px 2px;
+  border-top:1px solid #263351;
+  color:#72809e;
+  font-size:10px;
+  line-height:1.6;
+}
+.desktop-command-deck{margin-bottom:16px}
+.desktop-command-kpis{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:11px;
+}
+.desktop-kpi{
+  min-height:112px;
+  padding:15px;
+  border:1px solid #2b3a5e;
+  border-radius:17px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(77,215,255,.07),transparent 40%),
+    linear-gradient(145deg,#11192d,#0d1426);
+}
+.desktop-kpi-label{
+  color:#8090b0;
+  font-size:10px;
+  letter-spacing:.7px;
+  font-weight:850;
+}
+.desktop-kpi-value{
+  margin-top:10px;
+  color:#f4f7ff;
+  font-size:27px;
+  line-height:1;
+  font-weight:950;
+}
+.desktop-kpi-sub{
+  margin-top:9px;
+  color:#8795b2;
+  font-size:10px;
+  line-height:1.45;
+}
+.desktop-advanced-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(330px,.55fr);
+  gap:16px;
+  margin-top:16px;
+}
+.desktop-analytics-card{
+  min-width:0;
+}
+.desktop-chart-toolbar{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.desktop-filter-btn{
+  padding:6px 9px;
+  border:1px solid #2b3a60;
+  border-radius:9px;
+  background:#0f172a;
+  color:#8e9bb7;
+  font-size:11px;
+  font-weight:800;
+}
+.desktop-filter-btn.active{
+  color:#dff8ff;
+  border-color:#4dd7ff;
+  background:rgba(77,215,255,.09);
+}
+.desktop-activity-chart{
+  display:flex;
+  align-items:flex-end;
+  gap:7px;
+  height:208px;
+  padding:20px 8px 2px;
+  border-bottom:1px solid #2a3858;
+  overflow:hidden;
+}
+.desktop-bar-column{
+  flex:1 1 0;
+  min-width:12px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  gap:7px;
+}
+.desktop-bar-value{
+  color:#8796b4;
+  font-size:9px;
+  min-height:12px;
+}
+.desktop-bar{
+  width:min(28px,76%);
+  min-height:2px;
+  border-radius:7px 7px 2px 2px;
+  background:linear-gradient(180deg,#4dd7ff,#725df7);
+  box-shadow:0 0 15px rgba(77,215,255,.12);
+  transition:.25s;
+}
+.desktop-bar:hover{filter:brightness(1.25)}
+.desktop-bar-date{
+  height:25px;
+  color:#667593;
+  font-size:9px;
+  writing-mode:vertical-rl;
+}
+.desktop-analytics-bottom{
+  display:grid;
+  grid-template-columns:minmax(300px,.85fr) minmax(0,1.15fr);
+  gap:14px;
+  margin-top:17px;
+}
+.desktop-radar-wrap{
+  min-height:330px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #283858;
+  border-radius:17px;
+  background:#0b1222;
+  overflow:hidden;
+}
+.desktop-radar-wrap svg{width:100%;height:330px}
+.desktop-region-bars{display:grid;gap:10px}
+.desktop-region-row{
+  display:grid;
+  grid-template-columns:minmax(100px,140px) 1fr 42px;
+  gap:9px;
+  align-items:center;
+}
+.desktop-region-name{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:11px;
+  color:#abb6cc;
+}
+.desktop-region-track{
+  height:9px;
+  border-radius:999px;
+  background:#0a1020;
+  border:1px solid #263452;
+  overflow:hidden;
+}
+.desktop-region-fill{
+  height:100%;
+  border-radius:999px;
+}
+.desktop-region-num{text-align:right;font-size:11px;color:#7786a5}
+.desktop-recommendations{
+  display:grid;
+  gap:9px;
+}
+.desktop-recommendation{
+  padding:13px;
+  border:1px solid #2b395b;
+  background:#0e1628;
+  border-radius:14px;
+}
+.desktop-recommendation strong{
+  display:block;
+  margin-bottom:5px;
+  font-size:12px;
+}
+.desktop-recommendation p{
+  margin:0;
+  color:#8f9cb8;
+  font-size:11px;
+  line-height:1.6;
+}
+.desktop-snapshot{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,202,75,.22);
+  background:rgba(255,202,75,.045);
+  color:#cbbd91;
+  font-size:11px;
+  line-height:1.62;
+}
+.desktop-planner-card{margin-top:16px}
+.desktop-quick-task{
+  display:grid;
+  grid-template-columns:minmax(200px,1.3fr) 150px 110px 140px auto;
+  gap:8px;
+  align-items:end;
+  padding:13px;
+  border:1px solid #2a395c;
+  border-radius:16px;
+  background:#0c1425;
+}
+.desktop-field label{
+  display:block;
+  margin-bottom:5px;
+  color:#7e8ca9;
+  font-size:10px;
+  font-weight:800;
+}
+.desktop-quick-task input,.desktop-quick-task select{
+  min-height:40px;
+  padding:9px 10px;
+  border-radius:11px;
+}
+.desktop-planner-toolbar{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:14px 0 9px;
+}
+.desktop-planner-table-wrap{
+  overflow:auto;
+  border:1px solid #293858;
+  border-radius:15px;
+}
+.desktop-planner-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:820px;
+}
+.desktop-planner-table th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  padding:10px 11px;
+  text-align:left;
+  background:#111a2e;
+  border-bottom:1px solid #2a395a;
+  color:#7787a7;
+  font-size:10px;
+  letter-spacing:.6px;
+}
+.desktop-planner-table td{
+  padding:11px;
+  border-bottom:1px solid #202e49;
+  font-size:11px;
+  color:#aeb9d0;
+  vertical-align:middle;
+}
+.desktop-planner-table tr:last-child td{border-bottom:0}
+.desktop-planner-table tr.is-done{opacity:.5}
+.desktop-table-title{
+  max-width:330px;
+  color:#eef3ff;
+  font-size:12px;
+  font-weight:800;
+}
+.desktop-table-actions{display:flex;gap:5px}
+.desktop-mini-btn{
+  padding:6px 8px;
+  border:1px solid #314164;
+  border-radius:8px;
+  background:#121b31;
+  color:#b8c4dc;
+  font-size:10px;
+  font-weight:800;
+}
+.desktop-mini-btn.complete{
+  border-color:rgba(56,217,150,.32);
+  color:#aaf1ce;
+  background:rgba(56,217,150,.065);
+}
+.desktop-mini-btn.delete{
+  border-color:rgba(255,102,122,.24);
+  color:#e9a8b2;
+  background:rgba(255,102,122,.045);
+}
+.desktop-strategy-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-top:16px;
+}
+.desktop-boss-intel{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.desktop-boss-intel-card{
+  padding:13px;
+  border:1px solid #3e3150;
+  border-radius:14px;
+  background:linear-gradient(150deg,#181324,#10182a);
+}
+.desktop-boss-intel-card strong{display:block;font-size:12px}
+.desktop-boss-intel-card p{
+  margin:7px 0 0;
+  color:#8e99b2;
+  font-size:10px;
+  line-height:1.55;
+}
+.desktop-boss-intel-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:9px;
+  color:#d8c5ef;
+  font-size:10px;
+}
+.desktop-realm-matrix{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+.desktop-realm-cell{
+  min-height:147px;
+  padding:12px;
+  border:1px solid #283655;
+  border-radius:14px;
+  background:#0d1527;
+  opacity:.48;
+}
+.desktop-realm-cell.done{opacity:.82;border-color:rgba(56,217,150,.24)}
+.desktop-realm-cell.current{
+  opacity:1;
+  border-color:rgba(77,215,255,.5);
+  box-shadow:0 0 22px rgba(77,215,255,.07);
+}
+.desktop-realm-cell strong{display:block;margin:5px 0;font-size:13px}
+.desktop-realm-cell p{margin:0;color:#8794af;font-size:10px;line-height:1.52}
+.desktop-realm-cell span{color:#6e7d9d;font-size:9px}
+.desktop-data-console{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+.desktop-data-cell{
+  padding:12px;
+  border:1px solid #293858;
+  border-radius:13px;
+  background:#0c1425;
+}
+.desktop-data-cell span{display:block;color:#7585a5;font-size:9px}
+.desktop-data-cell strong{display:block;margin-top:6px;color:#dce5f7;font-size:12px;word-break:break-word}
+.desktop-only{display:block}
+.mobile-bottom-nav,.mobile-action-sheet{display:none!important}
+
+@media(min-width:1320px){
+  .desktop-sidebar{display:block}
+  .wrap{
+    margin-left:calc(var(--desktop-rail) + 30px);
+    max-width:calc(100vw - var(--desktop-rail) - 62px);
+  }
+}
+@media(max-width:1180px){
+  .desktop-command-kpis{grid-template-columns:repeat(3,1fr)}
+  .desktop-advanced-grid{grid-template-columns:1fr}
+  .desktop-strategy-grid{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .desktop-command-kpis{grid-template-columns:repeat(2,1fr)}
+  .desktop-analytics-bottom{grid-template-columns:1fr}
+  .desktop-quick-task{grid-template-columns:1fr 1fr}
+  .desktop-quick-task .desktop-submit-cell{grid-column:1/-1}
+  .desktop-realm-matrix{grid-template-columns:repeat(2,1fr)}
+  .desktop-data-console{grid-template-columns:repeat(2,1fr)}
+  .desktop-boss-intel{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .desktop-only{display:none!important}
+  .wrap{padding:18px 12px 34px}
+  .mobile-bottom-nav,.mobile-action-sheet{display:none!important}
+  [data-mobile-view]{display:grid!important}
+  section.card[data-mobile-view]{display:block!important}
+  .header{padding-top:0}
+}
+
+
+/* ===== v5.3 collapsible desktop sidebar ===== */
+.desktop-sidebar-toggle{
+  position:fixed;z-index:40;left:18px;top:18px;width:42px;height:42px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(77,215,255,.28);border-radius:13px;
+  background:rgba(11,16,30,.92);color:#dff8ff;cursor:pointer;
+  box-shadow:0 12px 34px rgba(0,0,0,.28);backdrop-filter:blur(18px);font-size:18px;
+}
+.desktop-sidebar-close{
+  position:absolute;top:12px;right:12px;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid #304164;border-radius:10px;background:#10182b;color:#aebbd4;cursor:pointer;
+}
+.desktop-sidebar{transition:transform .25s ease,opacity .25s ease}
+.wrap{transition:margin-left .25s ease,max-width .25s ease}
+body.desktop-sidebar-collapsed .desktop-sidebar{
+  transform:translateX(calc(-100% - 26px));opacity:0;pointer-events:none;
+}
+body.desktop-sidebar-collapsed .wrap{
+  margin-left:auto!important;max-width:var(--desktop-max)!important;
+}
+@media(max-width:1319px){
+  .desktop-sidebar{
+    display:block;transform:translateX(calc(-100% - 26px));opacity:0;pointer-events:none;
+  }
+  body.desktop-sidebar-open .desktop-sidebar{
+    transform:translateX(0);opacity:1;pointer-events:auto;
+  }
+  body.desktop-sidebar-open:after{
+    content:"";position:fixed;z-index:24;inset:0;background:rgba(2,5,12,.56);backdrop-filter:blur(3px);
+  }
+  .wrap{margin-left:auto!important;max-width:var(--desktop-max)!important}
+}
+@media(min-width:1320px){
+  .desktop-sidebar-toggle{left:calc(var(--desktop-rail) + 34px)}
+  body.desktop-sidebar-collapsed .desktop-sidebar-toggle{left:18px}
+}
+
+/* ===== v5.3 shared tasks ===== */
+.modal-backdrop{
+  align-items:flex-end;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding:
+    max(12px,env(safe-area-inset-top))
+    12px
+    calc(94px + env(safe-area-inset-bottom))
+    12px;
+}
+.modal{
+  max-height:calc(100dvh - 116px - env(safe-area-inset-bottom));
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-bottom:120px;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
+}
+.modal-actions{
+  position:sticky;
+  z-index:8;
+  bottom:calc(-20px - env(safe-area-inset-bottom));
+  margin:
+    18px
+    -18px
+    calc(-20px - env(safe-area-inset-bottom));
+  padding:
+    12px
+    18px
+    calc(14px + env(safe-area-inset-bottom));
+  border-top:1px solid rgba(63,81,123,.60);
+  background:linear-gradient(180deg,rgba(13,20,37,.90),#0d1425 25%);
+  backdrop-filter:blur(18px);
+}
+.modal-actions .btn{min-height:46px}
+.task-type-choice{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+}
+.task-type-btn{
+  min-height:76px;
+  padding:9px 8px;
+  border:1px solid #304066;
+  border-radius:13px;
+  background:#10182c;
+  color:#dfe7fa;
+  text-align:left;
+}
+.task-type-btn strong{display:block;margin-bottom:4px;font-size:12px}
+.task-type-btn span{display:block;color:#7e8ca7;font-size:10px;line-height:1.45}
+.task-type-btn.active{
+  border-color:#4dd7ff;
+  background:rgba(77,215,255,.10);
+  box-shadow:0 0 0 1px rgba(77,215,255,.08);
+}
+.task-kind-badge{
+  display:inline-flex;
+  align-items:center;
+  margin-left:5px;
+  padding:2px 6px;
+  border-radius:999px;
+  border:1px solid #2e3d60;
+  color:#91a0bc;
+  font-size:9px;
+  vertical-align:1px;
+}
+.task-kind-badge.routine{
+  color:#a9edd0;border-color:rgba(56,217,150,.28);
+  background:rgba(56,217,150,.06);
+}
+.task-kind-badge.repeatable{
+  color:#d7c3fa;border-color:rgba(139,92,246,.30);
+  background:rgba(139,92,246,.07);
+}
+.task-repeat-count{color:#bea9e9;font-size:10px;font-weight:850}
+@media(max-width:520px){
+  .task-type-choice{grid-template-columns:1fr}
+  .task-type-btn{min-height:58px}
+}
+
+
+
+/* ===== v5.3.1 cloud configuration recovery ===== */
+.cloud-config-summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+  padding:12px 13px;
+  border:1px solid rgba(77,215,255,.22);
+  border-radius:13px;
+  background:rgba(77,215,255,.045);
+}
+.cloud-config-summary strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:12px;
+}
+.cloud-config-summary span{
+  display:block;
+  max-width:520px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8493af;
+  font-size:10px;
+}
+.cloud-warning.cloud-editor-forced{
+  display:block!important;
+}
+@media(max-width:700px){
+  .cloud-config-summary{align-items:flex-start;flex-direction:column}
+  .cloud-config-summary .btn{width:100%}
+}
+
+</style>
+</head>
+<body>
+<div id="fxLayer"></div>
+<div class="levelup" id="levelup" onclick="closeLevelUp()"><div class="levelup-box">
+  <div class="gold" id="levelupKicker">LEVEL UP</div>
+  <h1 id="levelupTitle">Lv. 8</h1>
+  <div class="levelup-era" id="levelupEra">萌芽纪</div>
+  <div class="levelup-name" id="levelupName">「参天大树·幼年期」</div>
+  <div class="levelup-message" id="levelupMessage">你不是突然变强的。你只是终于看见了每天都在发生的升级。</div>
+  <div class="muted">点击任意位置继续</div>
+</div></div>
+
+
+<button class="desktop-sidebar-toggle desktop-only" id="desktopSidebarToggle" onclick="toggleDesktopSidebar()" aria-label="显示或隐藏侧边导航">☰</button>
+<aside class="desktop-sidebar desktop-only" aria-label="桌面战略导航">
+  <button class="desktop-sidebar-close" onclick="closeDesktopSidebar()" aria-label="关闭侧边导航">×</button><div class="desktop-sidebar-brand">
+    <strong>🌌 Life Engine</strong>
+    <span>DESKTOP COMMAND EDITION<br>同一角色 · 更大的驾驶舱</span>
+  </div>
+  <nav class="desktop-side-nav">
+    <a href="#command-center">◈ 战略总览</a>
+    <a href="#planner">📜 任务规划台</a>
+    <a href="#character">🌳 角色面板</a>
+    <a href="#realm">🌊 人生境界</a>
+    <a href="#boss-intelligence">👹 Boss 情报</a>
+    <a href="#world-overview">🌍 世界地图</a>
+    <a href="#reality-engine">⚡ 现实翻译器</a>
+    <a href="#system-console">☁️ 存档与云端</a>
+  </nav>
+  <div class="desktop-side-footer">
+    手机端适合随手结算。<br>
+    桌面端适合规划、比较、复盘与编辑。
+  </div>
+</aside>
+
+<div class="wrap">
+  <header class="header">
+    <div class="title"><h1>🌌 CK · Life Engine <span class="desktop-edition-label">DESKTOP COMMAND</span></h1><p>大屏战略驾驶舱：手机负责随手结算，电脑负责规划、分析、复盘和建造世界。两端读写同一个角色存档。</p></div>
+    <div class="top-actions">
+      <button class="btn secondary cloud-btn" id="cloudStatusBtn" onclick="openCloudModal()"><span class="cloud-dot" id="cloudStatusDot"></span><span id="cloudStatusText">云同步：初始化</span></button>
+      <button class="btn" onclick="saveCheckpoint()">💾 保存进度</button>
+      <button class="btn" onclick="openTaskModal()">＋ 发布今日任务</button>
+      <button class="btn secondary" onclick="openBossModal()">👹 记录 Boss</button>
+      <button class="btn secondary" onclick="openEventModal()">⚡ 翻译现实事件</button>
+      <button class="btn secondary" onclick="openInsightModal()">🌊 记录领悟</button>
+      <button class="btn secondary" onclick="openWorldSettings()">⚙️ 世界设定</button>
+      <button class="btn ghost" onclick="toggleSound()" id="soundBtn">🔊 音效：开</button>
+    </div>
+  </header>
+
+
+  <section class="desktop-command-deck desktop-only" id="command-center">
+    <div class="desktop-command-kpis">
+      <div class="desktop-kpi"><div class="desktop-kpi-label">⚔️ 实力等级</div><div class="desktop-kpi-value" id="desktopLevelKpi">Lv. —</div><div class="desktop-kpi-sub" id="desktopLevelSub">读取角色数据中</div></div>
+      <div class="desktop-kpi"><div class="desktop-kpi-label">🌊 人生境界</div><div class="desktop-kpi-value" id="desktopRealmKpi">—</div><div class="desktop-kpi-sub" id="desktopRealmSub">独立成长轨道</div></div>
+      <div class="desktop-kpi"><div class="desktop-kpi-label">⚡ 近 7 日战果</div><div class="desktop-kpi-value" id="desktopWeekXpKpi">0 XP</div><div class="desktop-kpi-sub" id="desktopWeekXpSub">任务与 Boss 合计</div></div>
+      <div class="desktop-kpi"><div class="desktop-kpi-label">📜 今日执行率</div><div class="desktop-kpi-value" id="desktopTodayRateKpi">0%</div><div class="desktop-kpi-sub" id="desktopTodayRateSub">0 / 0 项完成</div></div>
+      <div class="desktop-kpi"><div class="desktop-kpi-label">👹 活跃 Boss</div><div class="desktop-kpi-value" id="desktopBossKpi">0</div><div class="desktop-kpi-sub" id="desktopBossSub">等待下一回合</div></div>
+      <div class="desktop-kpi"><div class="desktop-kpi-label">☁️ 数据修订</div><div class="desktop-kpi-value" id="desktopRevisionKpi">R0</div><div class="desktop-kpi-sub" id="desktopRevisionSub">本机双存储</div></div>
+    </div>
+  </section>
+
+  <section class="desktop-advanced-grid desktop-only">
+    <div class="card desktop-analytics-card">
+      <div class="section-title">
+        <div><h2>📈 战略分析台</h2><div class="muted" style="font-size:11px;margin-top:4px">不是为了把人生压成 KPI，而是为了看见资源到底流向了哪里。</div></div>
+        <div class="desktop-chart-toolbar">
+          <button class="desktop-filter-btn active" data-chart-range="14" onclick="setDesktopChartRange(14)">14 天</button>
+          <button class="desktop-filter-btn" data-chart-range="30" onclick="setDesktopChartRange(30)">30 天</button>
+        </div>
+      </div>
+      <div class="desktop-activity-chart" id="desktopActivityChart"></div>
+      <div class="desktop-analytics-bottom">
+        <div>
+          <div class="muted" style="font-size:11px;font-weight:850;margin-bottom:8px">角色属性雷达</div>
+          <div class="desktop-radar-wrap" id="desktopRadarChart"></div>
+        </div>
+        <div>
+          <div class="muted" style="font-size:11px;font-weight:850;margin-bottom:8px">世界区域建设度</div>
+          <div class="desktop-region-bars" id="desktopRegionBars"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><h2>🧭 下一步决策</h2><button class="btn secondary small" onclick="copyStrategicSnapshot()">复制战略快照</button></div>
+      <div class="desktop-recommendations" id="desktopRecommendations"></div>
+      <div class="desktop-snapshot" id="desktopSnapshotText">正在根据角色数据生成战略快照……</div>
+    </div>
+  </section>
+
+  <section class="card desktop-planner-card desktop-only" id="planner">
+    <div class="section-title">
+      <div><h2>📜 桌面任务规划台</h2><div class="muted" style="font-size:11px;margin-top:4px">在电脑上一次看清今天、未来和已经完成的行动；创建的仍然是手机版完全认识的普通任务变量。</div></div>
+      <button class="btn secondary small" onclick="openTaskModal()">打开完整任务编辑器</button>
+    </div>
+    <div class="desktop-quick-task">
+      <div class="desktop-field"><label>任务名称</label><input id="desktopTaskName" placeholder="例如：完成 FAERS 主终点 PT 词表第一版"></div>
+      <div class="desktop-field"><label>发生区域</label><select id="desktopTaskRegion"></select></div>
+      <div class="desktop-field"><label>XP</label><input id="desktopTaskXP" type="number" min="0" value="20"></div>
+      <div class="desktop-field"><label>计划日期</label><input id="desktopTaskDate" type="date"></div>
+      <div class="desktop-submit-cell"><button class="btn" onclick="createDesktopQuickTask()">＋ 加入规划台</button></div>
+    </div>
+    <div class="desktop-planner-toolbar">
+      <div class="desktop-chart-toolbar">
+        <button class="desktop-filter-btn active" data-task-filter="open" onclick="setDesktopTaskFilter('open')">未完成</button>
+        <button class="desktop-filter-btn" data-task-filter="today" onclick="setDesktopTaskFilter('today')">今天</button>
+        <button class="desktop-filter-btn" data-task-filter="upcoming" onclick="setDesktopTaskFilter('upcoming')">未来</button>
+        <button class="desktop-filter-btn" data-task-filter="done" onclick="setDesktopTaskFilter('done')">已完成</button>
+        <button class="desktop-filter-btn" data-task-filter="all" onclick="setDesktopTaskFilter('all')">全部</button>
+      </div>
+      <div class="muted" style="font-size:10px" id="desktopPlannerSummary">—</div>
+    </div>
+    <div class="desktop-planner-table-wrap">
+      <table class="desktop-planner-table">
+        <thead><tr><th>日期</th><th>任务</th><th>区域</th><th>奖励</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody id="desktopPlannerBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="desktop-strategy-grid desktop-only" id="boss-intelligence">
+    <div class="card">
+      <div class="section-title"><h2>👹 Boss 情报中枢</h2><button class="btn secondary small" onclick="openBossModal()">记录新回合</button></div>
+      <div class="desktop-boss-intel" id="desktopBossIntel"></div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h2>🌊 八境晋阶矩阵</h2><button class="btn secondary small" onclick="openInsightModal()">记录领悟</button></div>
+      <div class="desktop-realm-matrix" id="desktopRealmMatrix"></div>
+    </div>
+  </section>
+
+  <section class="card desktop-only" style="margin-top:16px" id="data-console">
+    <div class="section-title"><h2>🗄️ 数据控制台</h2><span class="tag">与手机端完全相同的 state JSON</span></div>
+    <div class="desktop-data-console" id="desktopDataConsole"></div>
+  </section>
+
+  <section class="grid hero mobile-view-active" id="character" data-mobile-view="home">
+    <div class="card player">
+      <div class="level-row"><div><div class="muted">⚔️ POWER LEVEL · 实力等级</div><div class="level" id="levelText">Lv. 8</div><div class="class-name" id="classText">「参天大树·幼年期」</div><div class="era-line"><span class="era-badge" id="eraText">🌱 萌芽纪</span><span class="milestone-badge" id="milestoneText">下一时代：筑基纪</span></div></div><div style="text-align:right"><div class="muted">TOTAL XP</div><div class="xp-text"><span id="totalXP">1240</span> / <span id="nextXP">1520</span></div></div></div>
+      <div class="bar" style="margin-top:15px"><div class="fill overall" id="overallBar"></div></div>
+      <div class="muted" style="font-size:12px;margin-top:7px" id="xpHint">距离下一等级还差 <span id="xpRemain">280</span> XP</div>
+      <div class="level-philosophy" id="levelPhilosophy">这个阶段的任务不是证明你很厉害，而是学会：现实可以被行动改变。</div>
+      <div class="dual-system-note">⚔️ <b>实力等级</b>只奖励现实积累：能力、作品、身体、资源、选择权。普通任务获得 XP，但不会自动让你“悟道”。</div>
+      <div class="resources">
+        <div class="resource-pill">🧠 情报 <b id="intelRes">36</b></div><div class="resource-pill">🛡 防御 <b id="defRes">18</b></div><div class="resource-pill">🔥 连续推进 <b id="streakRes">0</b> 天</div><div class="resource-pill">🏆 成就 <b id="achCount">0</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title"><h2>🌳 角色属性</h2><button class="btn ghost small" onclick="openWorldSettings('attributes')">编辑属性</button></div>
+      <div class="attribute-grid" id="attributeGrid"></div>
+    </div>
+  </section>
+
+  
+  <section class="card realm-card" id="realm" style="margin-top:16px" data-mobile-view="home">
+    <div class="section-title">
+      <h2>🌊 人生境界 · 驾驭力量的能力</h2>
+      <button class="btn secondary small" onclick="openInsightModal()">＋ 记录领悟</button>
+    </div>
+    <div class="realm-head">
+      <div>
+        <div class="realm-rank" id="realmRank">REALM III</div>
+        <div class="realm-name" id="realmName">🛡️ 自持境</div>
+        <div class="realm-desc" id="realmDesc">战役很重要，但你不再允许一场战役把整个人烧掉。</div>
+      </div>
+      <div class="realm-points">🌊 累计定力<strong id="realmPoints">0</strong></div>
+    </div>
+    <div class="realm-progress-wrap">
+      <div class="bar"><div class="realm-fill" id="realmBar"></div></div>
+      <div class="muted" style="font-size:11px;margin-top:6px" id="realmProgressText">下一境界仍需真实的人生条件。</div>
+    </div>
+    <div class="realm-next">
+      <div class="realm-panel">
+        <strong id="realmNextTitle">下一境界：👑 主权境</strong>
+        <p id="realmNextDesc">我的身体、时间、注意力和人生方向属于我。</p>
+        <div class="realm-requirements" id="realmRequirements"></div>
+      </div>
+      <div class="realm-panel">
+        <strong>最近领悟</strong>
+        <p>境界不是“今天心情好不好”，而是你和同一类问题相遇时，反应结构是否真的改变。</p>
+        <div class="realm-insight-list" id="realmInsightList"></div>
+      </div>
+    </div>
+    <div class="realm-philosophy" id="realmPhilosophy">XP 来自你做了什么；境界来自你变成了谁。</div>
+    <div class="realm-track" id="realmTrack"></div>
+  </section>
+
+<section class="card life-path-card" id="power-path" style="margin-top:16px" data-mobile-view="home">
+    <div class="section-title">
+      <h2>⚔️ 实力成长 · 100级现实力量</h2>
+      <span class="tag" id="openWorldStatus">实力主线仍在展开</span>
+    </div>
+    <div class="life-path-summary">
+      <div class="life-path-current">
+        <strong id="currentEraTitle">🌱 当前：萌芽纪</strong>
+        <p id="currentEraDesc">先把“我能不能”变成“我先试一回合”。</p>
+      </div>
+      <div class="life-path-next">
+        <strong id="nextEraTitle">下一时代：筑基纪</strong>
+        <p id="nextEraDesc">把偶尔的爆发，变成可靠的生活系统。</p>
+      </div>
+    </div>
+    <div class="era-track" id="eraTrack"></div>
+    <div class="endgame-vision" id="endgameVision"></div>
+  </section>
+
+  <section class="grid two" id="today-operations" style="margin-top:16px" data-mobile-view="today">
+    <div class="card"><div class="section-title"><h2>📜 今日任务</h2><span class="tag" id="todayTag">0 / 0 完成</span></div><div id="taskList"></div></div>
+    <div class="card"><div class="section-title"><h2>👹 Boss 日志</h2><span class="tag">失败也掉落情报</span></div><div class="boss-history" id="bossHistory"></div></div>
+  </section>
+
+  <section class="grid two" id="world-overview" style="margin-top:16px" data-mobile-view="world">
+    <div class="card"><div class="section-title"><h2>🌍 世界地图</h2><button class="btn ghost small" onclick="openWorldSettings('regions')">编辑区域</button></div><div class="world-map" id="worldMap"></div></div>
+    <div class="card"><div class="section-title"><h2>🏆 成就系统</h2><span class="tag">自动解锁</span></div><div class="achievement-grid" id="achievementGrid"></div></div>
+  </section>
+
+  <section class="card" id="daily-report-section" style="margin-top:16px" data-mobile-view="home"><div class="section-title"><h2>📖 今日战报</h2><div><button class="btn secondary small" onclick="generateDailyReport()">重新生成</button> <button class="btn ghost small" onclick="copyReport()">复制战报</button></div></div><div class="battle-report" id="dailyReport">今天的剧情尚未开始。</div></section>
+
+  <section class="engine-grid" id="reality-engine" style="margin-top:16px" data-mobile-view="today">
+    <div class="card"><div class="section-title"><h2>⚡ 现实事件翻译器</h2><span class="tag">保险 / 汽车 / 认知也能结算</span></div><div class="event-box"><div class="muted" style="line-height:1.7">输入今天研究或经历的事情。医疗商业保险、汽车、经济学、社会观察等默认进入「认知大陆」，你也可以在世界设定里改掉。</div><textarea id="quickEventText" placeholder="例如：今天研究了百万医疗险的外购药责任和续保条件。"></textarea><div class="top-actions" style="justify-content:flex-start;margin-top:10px"><button class="btn small" onclick="previewEventFromQuickBox()">生成事件结算</button><button class="btn ghost small" onclick="openEventModal()">高级模式</button></div><div class="event-preview" id="quickEventPreview"></div></div></div>
+    <div class="card"><div class="section-title"><h2>🎒 装备与状态</h2><span class="tag">现实资源也算战力</span></div><div class="inventory-grid" id="inventoryGrid"></div></div>
+  </section>
+
+  <section class="grid two" id="boss-and-skills" style="margin-top:16px" data-mobile-view="world">
+    <div class="card"><div class="section-title"><h2>👹 Boss 图鉴</h2><span class="tag">机制逐渐暴露</span></div><div class="bestiary-grid" id="bestiaryGrid"></div></div>
+    <div class="card"><div class="section-title"><h2>🌟 技能树</h2><span class="tag">会随你的属性变化</span></div><div class="skill-grid" id="skillGrid"></div></div>
+  </section>
+
+  <section class="card" id="system-console" style="margin-top:16px" data-mobile-view="system">
+    <div class="section-title"><h2>🗃️ 存档与云端</h2><span class="tag">三层保护</span></div>
+    <div class="save-note"><b>现在每次操作都会同时尝试写入 localStorage 和 IndexedDB 两份浏览器存储。</b>但本地 HTML 在 Safari 里仍不能保证浏览器数据永远不被清理，所以真正可靠的存档动作是点击「💾 保存进度」下载一份存档文件，或生成一个已经把当前进度写进文件内部的新 HTML。</div>
+    <div class="save-status" id="saveStatus"><span class="save-dot"></span><span class="status-main" id="saveStatusMain">正在检查存档…</span><span class="status-sub" id="saveStatusSub"></span></div>
+    <div class="top-actions" style="justify-content:flex-start;margin-top:12px">
+      <button class="btn small" onclick="saveCheckpoint()">💾 保存进度文件</button>
+      <button class="btn secondary small" onclick="exportSnapshotHtml()">📦 生成带进度的新 HTML</button>
+      <button class="btn ghost small" onclick="triggerImport()">↩️ 导入存档</button>
+      <button class="btn danger small" onclick="resetAll()">重置 Life Engine</button>
+    </div>
+    <div class="settings-hint" style="margin-top:10px">推荐：平时正常使用即可；每次准备关掉页面前点一次顶部「💾 保存进度」。以后即使浏览器本地数据消失，也可以用存档文件恢复。想要最稳，就偶尔生成一个“带进度的新 HTML”，以后直接打开那个新文件继续。</div>
+    <input id="importFile" type="file" accept="application/json,.json,.cksave" class="hidden" onchange="importSaveFile(event)">
+  </section>
+  <div class="footer" data-mobile-view="system">CK · Life Engine v5.3.1 ｜ Desktop Command Edition ｜ 云同步修复</div>
+</div>
+
+<!-- TASK MODAL -->
+<div class="modal-backdrop" id="taskModal"><div class="modal wide"><h2>📜 发布一个新任务</h2><div class="form-grid"><div class="full"><label>任务类型</label><div class="task-type-choice" id="taskTypeChoices"><button type="button" class="task-type-btn active" data-task-kind="temporary" onclick="chooseTaskKind('temporary')"><strong>⚡ 临时任务</strong><span>完成后消失，明天不会自动出现。</span></button><button type="button" class="task-type-btn" data-task-kind="routine" onclick="chooseTaskKind('routine')"><strong>🔁 常规任务</strong><span>完成后消失，第二天自动再次出现。</span></button><button type="button" class="task-type-btn" data-task-kind="repeatable" onclick="chooseTaskKind('repeatable')"><strong>♾️ 每日不限次</strong><span>每天可以反复结算，完成后仍留在今日任务。</span></button></div></div><div class="full"><label>任务名称</label><input id="taskName" placeholder="例如：研究医疗商业保险的续保与外购药责任"></div><div><label>所属区域</label><select id="taskRegion"></select><div class="quick-add"><span class="settings-hint">没有合适的区域？</span><button class="btn ghost small" onclick="openWorldSettings('regions',true)">＋ 新建区域</button></div></div><div><label>XP 奖励</label><input id="taskXP" type="number" min="0" value="20"></div><div class="full"><label>属性奖励（全部可自定义）</label><div class="dynamic-rewards" id="taskAttributeRewards"></div></div><div><label>情报 +</label><input id="taskIntel" type="number" value="0"></div><div><label>防御 +</label><input id="taskDefense" type="number" value="0"></div></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal('taskModal')">取消</button><button class="btn" onclick="createTask()">发布任务</button></div></div></div>
+
+<!-- BOSS MODAL -->
+<div class="modal-backdrop" id="bossModal"><div class="modal"><h2>👹 记录一个 Boss 回合</h2><div class="form-grid"><div><label>Boss 类型</label><select id="bossType"><option>论文</option><option>面试</option><option>工作</option><option>身体</option><option>关系</option><option>决策</option><option>自定义</option></select></div><div><label>Boss 名称</label><input id="bossName" placeholder="例如：医疗险方案筛选"></div><div><label>本回合结果</label><select id="bossOutcome"><option value="loss">未击败</option><option value="progress">取得进展</option><option value="win">成功击败</option></select></div><div><label>回合前胜率 %</label><input id="bossBefore" type="number" min="0" max="100" value="48"></div><div><label>回合后胜率 %</label><input id="bossAfter" type="number" min="0" max="100" value="71"></div><div><label>情报 +</label><input id="bossIntel" type="number" value="12"></div><div><label>防御 +</label><input id="bossDefense" type="number" value="5"></div><div><label>XP +</label><input id="bossXP" type="number" value="30"></div><div class="full"><label>发生了什么 / 暴露了什么机制</label><textarea id="bossNote" placeholder="例如：发现真正关键的不是保额，而是续保条件、院外药和特药责任。"></textarea></div></div><div class="modal-actions"><button class="btn secondary" onclick="closeModal('bossModal')">取消</button><button class="btn" onclick="recordBoss()">结算本回合</button></div></div></div>
+
+
+<!-- INSIGHT / REALM MODAL -->
+<div class="modal-backdrop" id="insightModal"><div class="modal">
+  <div class="section-title"><h2>🌊 记录一次真正的领悟</h2><span class="tag">境界成长</span></div>
+  <div class="realm-help">
+    普通完成任务不会增加境界。只有当你发现自己面对失败、压力、欲望、边界或选择时，<b>反应方式真的和以前不一样了</b>，才值得记录定力。
+  </div>
+  <div class="form-grid" style="margin-top:13px">
+    <div class="full">
+      <label>发生了什么？</label>
+      <textarea id="insightEvent" placeholder="例如：一个重要机会失败了，但我没有觉得整个人生完了。"></textarea>
+    </div>
+    <div class="full">
+      <label>你和以前相比，哪里不一样？</label>
+      <textarea id="insightLesson" placeholder="例如：我开始把“这一局输了”和“我这个人失败了”分开。"></textarea>
+    </div>
+    <div class="full">
+      <label>这次变化有多深？</label>
+      <div class="insight-choice-grid" id="insightPointChoices">
+        <button type="button" class="insight-point-btn" data-points="1" onclick="chooseInsightPoints(1)">+1<br><span class="muted">轻微察觉</span></button>
+        <button type="button" class="insight-point-btn active" data-points="3" onclick="chooseInsightPoints(3)">+3<br><span class="muted">稳定变化</span></button>
+        <button type="button" class="insight-point-btn" data-points="5" onclick="chooseInsightPoints(5)">+5<br><span class="muted">重要突破</span></button>
+        <button type="button" class="insight-point-btn" data-points="8" onclick="chooseInsightPoints(8)">+8<br><span class="muted">结构改变</span></button>
+      </div>
+    </div>
+    <div class="full">
+      <label>是否完成了一个晋阶条件？</label>
+      <select id="insightMilestone"></select>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn secondary" onclick="closeModal('insightModal')">取消</button>
+    <button class="btn" onclick="recordInsight()">🌊 结算领悟</button>
+  </div>
+</div></div>
+
+<!-- EVENT MODAL -->
+<div class="modal-backdrop" id="eventModal"><div class="modal"><h2>⚡ 把现实翻译成 RPG</h2><div class="muted" style="line-height:1.7;margin-bottom:12px">事件分析仍然完全在浏览器本地完成；只有你的最终游戏存档 JSON 会在登录后同步到你自己的 Supabase 数据库。</div><textarea id="eventText" placeholder="今天发生或研究了什么？"></textarea><div class="top-actions" style="justify-content:flex-start;margin-top:10px"><button class="btn" onclick="previewEvent()">分析事件</button><button class="btn secondary" onclick="closeModal('eventModal')">关闭</button></div><div class="event-preview" id="eventPreview"></div></div></div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-backdrop" id="settingsModal"><div class="modal wide"><div class="section-title"><h2>⚙️ 世界设定</h2><span class="tag">你的世界由你定义</span></div><div class="settings-hint">区域决定任务发生在世界地图的哪里；属性决定你的角色究竟在成长什么。名称、图标、描述、数值和颜色都可以改。</div>
+  <div class="subsection" id="regionsSettingsSection"><div class="section-title"><h2 style="font-size:18px">🌍 区域</h2><span class="muted" style="font-size:12px">例如：认知大陆、消费决策、关系森林</span></div><div class="settings-list" id="regionSettingsList"></div><div class="quick-add"><button class="btn small" onclick="addRegion()">＋ 新增区域</button></div></div>
+  <div class="subsection" id="attributesSettingsSection"><div class="section-title"><h2 style="font-size:18px">🌳 属性</h2><span class="muted" style="font-size:12px">例如：认知力、决策力、审美、财富</span></div><div class="settings-list" id="attributeSettingsList"></div><div class="quick-add"><button class="btn small" onclick="addAttribute()">＋ 新增属性</button></div></div>
+  <div class="modal-actions"><button class="btn secondary" onclick="closeModal('settingsModal')">完成</button></div>
+</div></div>
+
+
+<!-- CLOUD MODAL -->
+<div class="modal-backdrop" id="cloudModal"><div class="modal">
+  <div class="section-title"><h2>☁️ CK Cloud World</h2><span class="tag">手机版 / 电脑版 · 同一角色</span></div>
+  <div class="cloud-panel">
+    <div class="cloud-state-card">
+      <strong id="cloudModalTitle">正在检查云端配置…</strong>
+      <div id="cloudModalDetail" class="tiny">本地存档始终保留，云端只是增加跨设备同步层。</div>
+    </div>
+
+    <div id="cloudConfigMissing" class="cloud-warning hidden">
+      <b>还没有连接你的云存档。</b><br>
+      你可以直接在这里粘贴 Supabase 的 Project URL 和 Publishable key，本机会记住它们，不再需要单独编辑 config.js。
+      <div class="form-grid" style="margin-top:12px">
+        <div class="full"><label>Supabase Project URL</label><input id="runtimeSupabaseUrl" inputmode="url" placeholder="https://xxxx.supabase.co"></div>
+        <div class="full"><label>Publishable key</label><input id="runtimeSupabaseKey" type="password" placeholder="sb_publishable_..."></div>
+      </div>
+      <div class="cloud-actions" style="margin-top:10px">
+        <button class="btn" style="flex:1" onclick="saveRuntimeCloudConfig()">保存并连接云端</button>
+        <button class="btn secondary" id="cloudConfigBackBtn" onclick="hideCloudConfigEditor()" type="button">返回登录</button>
+      </div>
+      <div class="settings-hint" style="margin-top:8px">只使用 <b>sb_publishable_...</b>，不要填写 Secret key。</div>
+    </div>
+
+    <div id="cloudLoggedOutBox">
+      <div class="cloud-config-summary" id="cloudConfigSummary">
+        <div>
+          <strong>Supabase 配置已保存在这台浏览器</strong>
+          <span id="cloudConfigSummaryUrl">—</span>
+        </div>
+        <button class="btn secondary small" type="button" onclick="showCloudConfigEditor()">修改 URL / Key</button>
+      </div>
+      <div class="form-grid">
+        <div class="full"><label>登录邮箱</label><input id="cloudEmail" type="email" autocomplete="email" placeholder="你的邮箱"></div>
+        <div class="full"><label>密码（至少 6 位）</label><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="你的密码"></div>
+      </div>
+      <div class="cloud-actions" style="margin-top:12px">
+        <button class="btn" onclick="cloudSignIn()">登录</button>
+        <button class="btn secondary" onclick="cloudSignUp()">第一次使用：注册</button>
+      </div>
+      <div class="settings-hint" style="margin-top:10px">第一次注册后，如果 Supabase 要求邮箱确认，请去邮箱点确认链接，然后回到这个页面登录。</div>
+    </div>
+
+    <div id="cloudLoggedInBox" class="hidden">
+      <div class="cloud-good">当前账号：<b id="cloudUserEmail">—</b><br>每次修改都会先立即保存在本机，再自动同步云端。断网时不会丢失，恢复联网后会继续同步。</div>
+      <div class="cloud-actions">
+        <button class="btn" onclick="cloudSyncNow()">☁️ 立即同步</button>
+        <button class="btn secondary" onclick="cloudPullNow()">⬇️ 从云端读取</button>
+        <button class="btn ghost" onclick="cloudPushNow()">⬆️ 用本机覆盖云端</button>
+        <button class="btn ghost" onclick="cloudSignOut()">退出云账号</button>
+      </div>
+      <div class="settings-hint">正常使用时不需要点这些按钮；它们只用于手动恢复或换设备时检查。</div>
+    </div>
+
+    <div id="cloudConflictBox" class="cloud-conflict-box hidden">
+      <strong>⚠️ 检测到两个设备都修改过存档</strong>
+      <div class="cloud-conflict-grid">
+        <div class="cloud-version"><strong>📱💻 这台设备</strong><span id="conflictLocalInfo">—</span></div>
+        <div class="cloud-version"><strong>☁️ 云端版本</strong><span id="conflictRemoteInfo">—</span></div>
+      </div>
+      <div class="cloud-actions" style="margin-top:12px">
+        <button class="btn" onclick="resolveCloudConflict('remote')">使用云端版本</button>
+        <button class="btn secondary" onclick="resolveCloudConflict('local')">使用本机版本</button>
+        <button class="btn ghost" onclick="saveCheckpoint()">先下载本机备份</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-actions"><button class="btn secondary" onclick="closeModal('cloudModal')">关闭</button></div>
+</div></div>
+
+
+<nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="手机主导航">
+  <button class="mobile-nav-btn active" data-mobile-nav="home" onclick="switchMobileView('home')"><span class="ico">🌳</span><span>角色</span></button>
+  <button class="mobile-nav-btn" data-mobile-nav="today" onclick="switchMobileView('today')"><span class="ico">⚔️</span><span>今日</span></button>
+  <button class="mobile-nav-btn primary" onclick="openMobileActions()" aria-label="快速结算"><span class="ico">＋</span><span>添加</span></button>
+  <button class="mobile-nav-btn" data-mobile-nav="world" onclick="switchMobileView('world')"><span class="ico">🌍</span><span>世界</span></button>
+  <button class="mobile-nav-btn" data-mobile-nav="system" onclick="switchMobileView('system')"><span class="ico">☁️</span><span>系统</span></button>
+</nav>
+
+<div class="mobile-action-sheet" id="mobileActionSheet" onclick="if(event.target===this)closeMobileActions()">
+  <div class="mobile-action-panel">
+    <div class="mobile-action-handle"></div>
+    <div class="mobile-action-title">这一回合发生了什么？</div>
+    <div class="mobile-action-grid">
+      <button class="mobile-action-card" onclick="mobileQuickAction('task')"><span class="action-ico">📜</span><b>发布任务</b><span>给下一步行动设置 XP 与属性奖励</span></button>
+      <button class="mobile-action-card" onclick="mobileQuickAction('event')"><span class="action-ico">⚡</span><b>结算现实事件</b><span>把研究、经历和洞察翻译成成长</span></button>
+      <button class="mobile-action-card" onclick="mobileQuickAction('boss')"><span class="action-ico">👹</span><b>记录 Boss</b><span>失败也会掉落情报、防御与机制</span></button>
+      <button class="mobile-action-card" onclick="mobileQuickAction('settings')"><span class="action-ico">⚙️</span><b>编辑世界</b><span>新增区域、属性，修改你的世界规则</span></button>
+      <button class="mobile-action-card full-action" onclick="mobileQuickAction('insight')"><span class="action-ico">🌊</span><b>记录一次领悟</b><span>只有真正改变反应结构的时刻，才会增加定力并推动境界晋阶</span></button>
+    </div>
+    <button class="btn mobile-action-cancel" onclick="closeMobileActions()">取消</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script id="embeddedSave" type="application/json"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const STORAGE_KEY='ckLifeEngineStateV33';
+const LEGACY_KEYS=['ckLifeEngineStateV32','ckLifeEngineStateV3','ckRpgState'];
+const IDB_NAME='CKLifeEngineDB';
+const IDB_STORE='saves';
+const IDB_KEY='current';
+const today=()=>new Date().toISOString().slice(0,10);
+const clone=o=>JSON.parse(JSON.stringify(o));
+const makeId=(prefix='id')=>prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);
+const palette=['#38d996','#8b5cf6','#ff6b67','#4dd7ff','#ffca4b','#ff9c4b','#72a7ff','#c084fc','#f472b6','#34d399'];
+
+const defaultState={
+  version:'5.3',xp:1240,sound:true,lastActiveDate:'',streak:0,completedTotal:0,
+  meta:{revision:0,updatedAt:'',lastFileBackupRevision:0,lastFileBackupAt:''},
+  resources:{intel:36,defense:18},
+  realm:{
+    points:62,
+    flags:{
+      reframe_failure:true,
+      maintain_routine_under_pressure:true,
+      set_boundary:false,
+      activate_second_path:false,
+      pursue_desire_without_shame:false,
+      want_to_win_without_self_worth:false,
+      define_own_main_quest:false
+    },
+    insights:[
+      {id:'seed_failure',event:'把失败从“白输”改写成情报、Boss弱点和下一回合胜率。',lesson:'这一局输了，不等于我这个人失败。',points:5,milestone:'reframe_failure',date:today()},
+      {id:'seed_water_ambition',event:'开始理解“如水的野心”：重大事情之前，仍然保留睡眠、健身和自己的生活。',lesson:'野心不需要靠燃烧整个生活来证明强度。',points:5,milestone:'maintain_routine_under_pressure',date:today()}
+    ]
+  },
+  attributes:{
+    life:{id:'life',name:'生命力',icon:'💚',value:92,color:'#38d996'},
+    research:{id:'research',name:'科研',icon:'🧬',value:56,color:'#8b5cf6'},
+    combat:{id:'combat',name:'战斗力',icon:'🥊',value:34,color:'#ff6b67'},
+    freedom:{id:'freedom',name:'自由度',icon:'🕊️',value:73,color:'#4dd7ff'},
+    cognition:{id:'cognition',name:'认知力',icon:'🧠',value:48,color:'#ffca4b'}
+  },
+  regions:{
+    research:{id:'research',name:'科研大陆',icon:'🧬',desc:'FAERS、论文、证据、研究设计与医学科研能力',progress:56,color:'#8b5cf6'},
+    cognition:{id:'cognition',name:'认知大陆',icon:'🧠',desc:'医疗保险、汽车、经济学、社会机制、产品比较与世界模型',progress:34,color:'#ffca4b'},
+    health:{id:'health',name:'生命森林',icon:'🌲',desc:'睡眠、健身、恢复、身体能力与长期健康底盘',progress:78,color:'#38d996'},
+    career:{id:'career',name:'自由城邦',icon:'🏙️',desc:'CRP 转型、职业选择权、收入与迁徙能力',progress:48,color:'#ff9c4b'},
+    english:{id:'english',name:'英语海域',icon:'🗣️',desc:'听说、表达、面试与国际流动能力',progress:42,color:'#4dd7ff'},
+    wealth:{id:'wealth',name:'财富与决策区',icon:'💰',desc:'保险配置、重大消费、资产选择、预算与长期财务安全',progress:20,color:'#72a7ff'},
+    interests:{id:'interests',name:'兴趣群岛',icon:'🎨',desc:'油画、声乐、街舞、滑雪、旅行与纯粹因为喜欢而探索的支线',progress:36,color:'#c084fc'},
+    relationships:{id:'relationships',name:'关系森林',icon:'🧩',desc:'亲密关系、家庭、同事、人际边界与沟通策略',progress:30,color:'#f472b6'}
+  },
+  tasks:[
+    {id:1,name:'看 1 篇文献',region:'research',xp:20,rewards:{research:2},intel:5,defense:0,done:false,date:today()},
+    {id:2,name:'健身 40 分钟',region:'health',xp:20,rewards:{life:5,combat:3},intel:0,defense:0,done:false,date:today()},
+    {id:3,name:'研究一个自己真正好奇的问题',region:'cognition',xp:20,rewards:{cognition:3,freedom:1},intel:5,defense:0,done:false,date:today()}
+  ],
+  bosses:[{id:1,type:'论文',name:'FAERS 独立研究项目',outcome:'progress',before:25,after:48,intel:18,defense:8,xp:80,note:'已完成选题侦察、方向重构、Comparator 与三级 outcome 框架。当前 Boss 弱点：PT 词表与操作性定义。',date:today()}],
+  achievements:[],reports:[],events:[],
+  inventory:[
+    {id:'headphones',icon:'🎧',name:'',desc:'装备：把环境噪音变成可控变量。',active:true},
+    {id:'coffee',icon:'☕️',name:'',desc:'短时效果：进入任务前获得一次启动加成。',active:true},
+    {id:'kettlebell',icon:'🏋️',name:'力量训练装备',desc:'长期被动：每次训练都在积累身体安全感。',active:true},
+    {id:'system',icon:'🧭',name:'Life Engine',desc:'传奇装备：把失败转换为情报，把行动转换为经验。',active:true}
+  ]
+};
+let state=clone(defaultState);
+
+function byId(id){return document.getElementById(id)}
+function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
+function num(id){return Number(byId(id)?.value||0)}
+function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function hexToRgba(hex,a=.15){const h=(hex||'#8b5cf6').replace('#','');const f=h.length===3?h.split('').map(x=>x+x).join(''):h;const n=parseInt(f,16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`}
+function normalizeEntityCollection(value,kind){
+  if(!value)return kind==='attributes'?clone(defaultState.attributes):clone(defaultState.regions);
+  if(Array.isArray(value)){const out={};value.forEach(x=>{if(x&&x.id)out[x.id]=x});return out}
+  return value;
+}
+function migrateLegacy(obj){
+  if(!obj)return clone(defaultState);
+  const base=clone(defaultState);const out={...base,...obj};
+  if(obj.map&&!obj.regions)out.regions={};
+  if(obj.map&&!obj.regions){for(const [id,r] of Object.entries(obj.map))out.regions[id]={id,name:r.name||id,icon:r.icon||'🗺️',desc:r.desc||'',progress:Number(r.progress||0),color:defaultState.regions[id]?.color||palette[Math.floor(Math.random()*palette.length)]}}
+  if(obj.attributes&&Object.values(obj.attributes).every(v=>typeof v==='number')){const attrs={};for(const [id,v] of Object.entries(obj.attributes)){attrs[id]={id,name:({life:'生命力',research:'科研',combat:'战斗力',freedom:'自由度'}[id]||id),icon:({life:'💚',research:'🧬',combat:'🥊',freedom:'🕊️'}[id]||'✨'),value:Number(v),color:defaultState.attributes[id]?.color||palette[Math.floor(Math.random()*palette.length)]}}out.attributes=attrs;if(!out.attributes.cognition)out.attributes.cognition=clone(defaultState.attributes.cognition)}
+  out.attributes=normalizeEntityCollection(out.attributes,'attributes');out.regions=normalizeEntityCollection(out.regions,'regions');
+  for(const [id,a] of Object.entries(out.attributes)){out.attributes[id]={id,name:a.name||id,icon:a.icon||'✨',value:Number(a.value??0),color:a.color||palette[Math.floor(Math.random()*palette.length)]}}
+  for(const [id,r] of Object.entries(out.regions)){out.regions[id]={id,name:r.name||id,icon:r.icon||'🗺️',desc:r.desc||'',progress:Number(r.progress??0),color:r.color||palette[Math.floor(Math.random()*palette.length)]}}
+  out.resources={...base.resources,...(obj.resources||{})};
+  out.realm={
+    ...clone(base.realm),
+    ...(obj.realm||{}),
+    flags:{...clone(base.realm.flags),...(obj.realm?.flags||{})},
+    insights:Array.isArray(obj.realm?.insights)?obj.realm.insights:clone(base.realm.insights)
+  };
+  out.realm.points=Number(out.realm.points||0);
+  out.tasks=(obj.tasks||base.tasks).map(t=>({
+    ...t,
+    kind:['temporary','routine','repeatable'].includes(t.kind)?t.kind:'temporary',
+    lastCompletedDate:t.lastCompletedDate||null,
+    repeatDate:t.repeatDate||null,
+    repeatCount:Number(t.repeatCount||0),
+    intel:Number(t.intel??t.rewards?.intel??0),
+    defense:Number(t.defense??t.rewards?.defense??0),
+    rewards:Object.fromEntries(Object.entries(t.rewards||{}).filter(([k])=>!['intel','defense'].includes(k)))
+  }));
+  out.meta={...base.meta,...(obj.meta||{})};out.version='5.3';
+  return out;
+}
+function parseEmbeddedSave(){
+  try{const el=byId('embeddedSave');const raw=el?.textContent?.trim();return raw?migrateLegacy(JSON.parse(raw)):null}catch(e){return null}
+}
+function stateStamp(s){return Math.max(Number(s?.meta?.revision||0),Date.parse(s?.meta?.updatedAt||0)||0)}
+function chooseNewest(...items){return items.filter(Boolean).sort((a,b)=>stateStamp(b)-stateStamp(a))[0]||clone(defaultState)}
+function load(){
+  const candidates=[parseEmbeddedSave()];
+  try{const raw=localStorage.getItem(STORAGE_KEY);if(raw)candidates.push(migrateLegacy(JSON.parse(raw)))}catch(e){}
+  for(const key of LEGACY_KEYS){try{const raw=localStorage.getItem(key);if(raw)candidates.push(migrateLegacy(JSON.parse(raw)))}catch(e){}}
+  return chooseNewest(...candidates);
+}
+function openSaveDB(){return new Promise((resolve,reject)=>{try{const req=indexedDB.open(IDB_NAME,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE)};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}catch(e){reject(e)}})}
+async function saveToIndexedDB(snapshot){try{const db=await openSaveDB();await new Promise((resolve,reject)=>{const tx=db.transaction(IDB_STORE,'readwrite');tx.objectStore(IDB_STORE).put(clone(snapshot),IDB_KEY);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});db.close();return true}catch(e){return false}}
+async function loadFromIndexedDB(){try{const db=await openSaveDB();const value=await new Promise((resolve,reject)=>{const tx=db.transaction(IDB_STORE,'readonly');const req=tx.objectStore(IDB_STORE).get(IDB_KEY);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)});db.close();return value?migrateLegacy(value):null}catch(e){return null}}
+function persistStateOnly(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
+  saveToIndexedDB(state);
+  updateSaveStatus();
+  if(!cloudApplyingRemote)scheduleCloudSave();
+}
+function save(renderNow=true){
+  state.meta=state.meta||clone(defaultState.meta);state.meta.revision=Number(state.meta.revision||0)+1;state.meta.updatedAt=new Date().toISOString();
+  persistStateOnly();if(renderNow)render();
+}
+
+
+
+const REALM_MILESTONES={
+  reframe_failure:{label:'把一次重要失败真正转化为情报，而不是自我否定',icon:'🧭'},
+  maintain_routine_under_pressure:{label:'在一次重大事件前后，仍然保护睡眠、身体和日常节奏',icon:'🌊'},
+  set_boundary:{label:'在一件真正重要的关系或现实事件中，守住自己的边界',icon:'🛡️'},
+  activate_second_path:{label:'当一条重要路径受阻时，真实启动另一条可行路线',icon:'🌳'},
+  pursue_desire_without_shame:{label:'承认自己想要更多，并主动追求丰盛，而不因欲望羞耻',icon:'🏰'},
+  want_to_win_without_self_worth:{label:'全力想赢，但一次输赢不再决定自我价值和整个未来',icon:'🌊'},
+  define_own_main_quest:{label:'主动定义一个不是别人替你规定的人生主线，并开始建设它',icon:'🌌'}
+};
+
+const LIFE_REALMS=[
+  {rank:'I',icon:'🔥',name:'燃火境',min:0,requirements:[],desc:'“我必须赢。”野心第一次成为真正的推进力。成功令人兴奋，失败也很容易刺进自我价值。',philosophy:'燃火不是低级。没有这团火，很多世界根本不会被你打开。'},
+  {rank:'II',icon:'🧭',name:'识局境',min:20,requirements:['reframe_failure'],desc:'你开始区分“我输了”和“这一局输了”。Boss 暴露机制，失败开始留下地图。',philosophy:'失败不再只是一种痛苦，也是一种情报来源。'},
+  {rank:'III',icon:'🛡️',name:'自持境',min:45,requirements:['reframe_failure','maintain_routine_under_pressure'],desc:'战役很重要，但你不再允许一场战役把整个人烧掉。野心开始拥有底盘。',philosophy:'你不是降低野心，而是在保护那个需要长期作战的自己。'},
+  {rank:'IV',icon:'👑',name:'主权境',min:75,requirements:['reframe_failure','maintain_routine_under_pressure','set_boundary'],desc:'身体、时间、注意力和人生方向逐渐回到你手里。拒绝和争取拥有同样的重量。',philosophy:'边界不是为了缩小世界，而是为了让你的世界真正属于你。'},
+  {rank:'V',icon:'🌳',name:'多线境',min:110,requirements:['reframe_failure','maintain_routine_under_pressure','set_boundary','activate_second_path'],desc:'没有任何单一副本再拥有定义整个人生的权限。你开始真正拥有容错率。',philosophy:'一条路断了，不等于世界没了；你已经能打开第二张地图。'},
+  {rank:'VI',icon:'🏰',name:'丰盛境',min:150,requirements:['reframe_failure','maintain_routine_under_pressure','set_boundary','activate_second_path','pursue_desire_without_shame'],desc:'你允许自己想要很多，而且开始有能力慢慢得到它们。安全之后，人生进入建设期。',philosophy:'真正的丰盛不是克制欲望，而是拥有承载欲望的能力。'},
+  {rank:'VII',icon:'🌊',name:'如水境',min:200,requirements:['reframe_failure','maintain_routine_under_pressure','set_boundary','activate_second_path','pursue_desire_without_shame','want_to_win_without_self_worth'],desc:'你非常想赢，而且越来越有能力赢；但这一局输了，你的帝国仍然存在。',philosophy:'如水的野心不是佛系，而是不会把整片海押在一场战役上。'},
+  {rank:'VIII',icon:'🌌',name:'创世境',min:260,requirements:['reframe_failure','maintain_routine_under_pressure','set_boundary','activate_second_path','pursue_desire_without_shame','want_to_win_without_self_worth','define_own_main_quest'],desc:'你不再只完成世界给你的主线，而开始创造一种原本不存在的人生组合。',philosophy:'最终权限不是没有目标，而是你自己定义什么叫赢。'}
+];
+
+function currentRealmInfo(){
+  const points=Number(state.realm?.points||0);
+  let index=0;
+  for(let i=1;i<LIFE_REALMS.length;i++){
+    const realm=LIFE_REALMS[i];
+    const hasPoints=points>=realm.min;
+    const hasReqs=realm.requirements.every(k=>!!state.realm?.flags?.[k]);
+    if(hasPoints&&hasReqs)index=i;else break;
+  }
+  const current=LIFE_REALMS[index];
+  const next=LIFE_REALMS[index+1]||null;
+  return {index,current,next,points,isMax:index===LIFE_REALMS.length-1};
+}
+function realmProgressPercent(info=currentRealmInfo()){
+  if(info.isMax)return 100;
+  const start=info.current.min;
+  const end=info.next.min;
+  return clamp(((info.points-start)/(end-start))*100,0,100);
+}
+function renderRealm(){
+  const info=currentRealmInfo();
+  const {current,next,points,index,isMax}=info;
+  byId('realmRank').textContent=`REALM ${current.rank} · ${index+1}/8`;
+  byId('realmName').textContent=`${current.icon} ${current.name}`;
+  byId('realmDesc').textContent=current.desc;
+  byId('realmPoints').textContent=points;
+  byId('realmBar').style.width=realmProgressPercent(info)+'%';
+  byId('realmPhilosophy').innerHTML=`<b>${escapeHtml(current.philosophy)}</b><br>XP 来自你做了什么；境界来自你变成了谁。`;
+
+  if(isMax){
+    byId('realmProgressText').textContent='🌌 创世境已达成：主线编辑器开启。定力仍可累计，但不再用来证明高低。';
+    byId('realmNextTitle').textContent='最高权限：主线编辑器';
+    byId('realmNextDesc').textContent='继续征服、创造新的世界目标，或者享受已经赢来的世界，都由你决定。';
+    byId('realmRequirements').innerHTML='<div class="realm-req done"><span class="req-mark">✓</span><span>你已经完成全部既定晋阶条件。</span></div>';
+  }else{
+    byId('realmNextTitle').textContent=`下一境界：${next.icon} ${next.name}`;
+    byId('realmNextDesc').textContent=next.desc;
+    const pointDone=points>=next.min;
+    const pointReq=`累计定力达到 ${next.min}（当前 ${points}）`;
+    const reqs=[
+      `<div class="realm-req ${pointDone?'done':''}"><span class="req-mark">${pointDone?'✓':'○'}</span><span>${escapeHtml(pointReq)}</span></div>`,
+      ...next.requirements.map(key=>{
+        const done=!!state.realm.flags[key],m=REALM_MILESTONES[key];
+        return `<div class="realm-req ${done?'done':''}"><span class="req-mark">${done?'✓':'○'}</span><span>${escapeHtml(m?.icon||'◇')} ${escapeHtml(m?.label||key)}</span></div>`;
+      })
+    ];
+    byId('realmRequirements').innerHTML=reqs.join('');
+    const missingReqs=next.requirements.filter(k=>!state.realm.flags[k]).length;
+    const missingPoints=Math.max(0,next.min-points);
+    byId('realmProgressText').textContent=missingReqs
+      ? `距离 ${next.name}：还差 ${missingPoints} 定力，并有 ${missingReqs} 个现实晋阶条件未完成。`
+      : `晋阶条件已完成，还差 ${missingPoints} 定力。`;
+  }
+
+  const insights=[...(state.realm?.insights||[])].slice(-3).reverse();
+  byId('realmInsightList').innerHTML=insights.length?insights.map(i=>`
+    <div class="realm-insight">
+      <strong>${escapeHtml(i.lesson||i.event||'一次领悟')}</strong>
+      <p>${escapeHtml(i.event||'')}</p>
+      <div class="realm-insight-meta">🌊 定力 +${Number(i.points||0)} · ${escapeHtml(i.date||'')}</div>
+    </div>`).join(''):'<div class="muted" style="font-size:11px">还没有记录领悟。真正的变化发生时，再来这里结算。</div>';
+
+  byId('realmTrack').innerHTML=LIFE_REALMS.map((r,i)=>{
+    const cls=i<index?'done':i===index?'current':'';
+    return `<div class="realm-node ${cls}"><span>${i<index?'✓ 已通过':i===index?'● 当前':'○ 未解锁'}</span><strong>${r.icon} ${escapeHtml(r.name)}</strong><span>境界 ${r.rank}</span></div>`;
+  }).join('');
+}
+let selectedInsightPoints=3;
+function chooseInsightPoints(points){
+  selectedInsightPoints=Number(points||3);
+  document.querySelectorAll('#insightPointChoices [data-points]').forEach(btn=>{
+    btn.classList.toggle('active',Number(btn.dataset.points)===selectedInsightPoints);
+  });
+}
+function populateInsightMilestones(){
+  const select=byId('insightMilestone');
+  if(!select)return;
+  const options=['<option value="">这次只是领悟，不标记晋阶条件</option>'];
+  for(const [key,m] of Object.entries(REALM_MILESTONES)){
+    const done=!!state.realm.flags[key];
+    options.push(`<option value="${key}" ${done?'disabled':''}>${done?'✓ ':''}${escapeHtml(m.icon)} ${escapeHtml(m.label)}</option>`);
+  }
+  select.innerHTML=options.join('');
+}
+function openInsightModal(){
+  populateInsightMilestones();
+  chooseInsightPoints(3);
+  byId('insightEvent').value='';
+  byId('insightLesson').value='';
+  byId('insightModal').classList.add('show');
+  setTimeout(()=>byId('insightEvent').focus(),80);
+}
+function recordInsight(){
+  const event=byId('insightEvent').value.trim();
+  const lesson=byId('insightLesson').value.trim();
+  if(!event||!lesson)return showToast('请写下发生了什么，以及你哪里真的不一样了。');
+  const before=currentRealmInfo();
+  const milestone=byId('insightMilestone').value;
+  state.realm.points=Number(state.realm.points||0)+selectedInsightPoints;
+  if(milestone)state.realm.flags[milestone]=true;
+  state.realm.insights.push({
+    id:makeId('insight'),
+    event,lesson,
+    points:selectedInsightPoints,
+    milestone,
+    date:today()
+  });
+  save();
+  closeModal('insightModal');
+  const after=currentRealmInfo();
+  showToast(`🌊 定力 +${selectedInsightPoints} · ${after.current.icon} ${after.current.name}`);
+  spawnFX(innerWidth/2,innerHeight*.45,`🌊 +${selectedInsightPoints}`);
+  if(after.index>before.index)setTimeout(()=>showRealmUp(after.current),450);
+}
+function showRealmUp(realm){
+  byId('levelupKicker').textContent='REALM ASCENDED';
+  byId('levelupTitle').textContent=`境界 ${realm.rank}`;
+  byId('levelupEra').textContent='🌊 人生境界晋阶';
+  byId('levelupName').textContent=`「${realm.icon} ${realm.name}」`;
+  byId('levelupMessage').textContent=realm.philosophy;
+  byId('levelup').classList.add('show');
+  playLevel();
+  for(let i=0;i<8;i++)setTimeout(()=>spawnFX(innerWidth*(.25+Math.random()*.5),innerHeight*(.35+Math.random()*.3),'🌊'),i*80);
+}
+
+const LIFE_ERAS=[
+  {min:1,max:10,icon:'🌱',name:'萌芽纪',short:'行动开始',desc:'先把“我能不能”变成“我先试一回合”。你开始发现，现实不是只能承受，也可以被一点点修改。',milestone:'学会行动，不把一次失败等同于自我否定。'},
+  {min:11,max:20,icon:'🌿',name:'筑基纪',short:'建立底盘',desc:'睡眠、身体、日常秩序和基本执行力开始成为你的底盘。你不再只靠情绪和爆发推进人生。',milestone:'让生活系统在普通日子里也能运转。'},
+  {min:21,max:30,icon:'🧭',name:'开拓纪',short:'探索地图',desc:'你开始进入更多地图：职业、知识、兴趣、城市、关系。世界不再只有别人替你安排的那一条路。',milestone:'获得多条可走的路径。'},
+  {min:31,max:40,icon:'🛡️',name:'主权纪',short:'建立边界',desc:'你越来越清楚什么属于自己：身体、时间、注意力、选择权。拒绝开始和争取一样重要。',milestone:'不再靠牺牲自己换取关系和认可。'},
+  {min:41,max:50,icon:'🏗️',name:'构筑纪',short:'积累系统',desc:'知识变成模型，经验变成流程，失败变成情报。你开始拥有可以反复复用的个人系统。',milestone:'把一次性努力变成长期资产。'},
+  {min:51,max:60,icon:'🌳',name:'多线人生纪',short:'不止一条主线',desc:'职业不再是唯一主线。身体、兴趣、关系、迁移、财富和好奇心都拥有自己的剧情。',milestone:'任何单一副本失败，都不再等于人生失败。'},
+  {min:61,max:70,icon:'🏰',name:'领主纪',short:'拥有自己的疆域',desc:'你开始真正拥有自己的疆域：时间如何花、钱为何存、身体给谁靠近、人生往哪里去，都由你决定。',milestone:'从被安排的人，变成自己世界的主理人。'},
+  {min:71,max:80,icon:'🌺',name:'丰盛纪',short:'从防守到创造',desc:'你不再只想着逃离不喜欢的生活，也开始主动创造喜欢的生活。安全感逐渐让位于丰盛感。',milestone:'拥有力量之后，开始建设值得生活的世界。'},
+  {min:81,max:90,icon:'🌊',name:'自由纪',short:'选择空间扩大',desc:'机会不再是唯一火种。你可以努力，也可以放弃；可以进入，也可以离开。真正的自由是拥有足够多的出口。',milestone:'任何一次得失，都无法垄断你对未来的想象。'},
+  {min:91,max:100,icon:'👑',name:'世界主权纪',short:'野心得到兑现',desc:'你已经积累了真正的现实力量：身体、认知、资源、作品、边界与选择权。平常心不是放弃野心，而是终于有能力享受自己赢来的世界。',milestone:'Lv.100：解锁主线编辑器。以后由你创建新的世界目标。'}
+];
+
+const LEVEL_TITLES=[
+  '初醒者','行动学徒','现实观察者','路径侦察者','边界萌芽者','失败拾荒者','成长构筑者','参天大树·幼年期','第一张地图的主人','萌芽纪守望者',
+  '生活筑基者','节律修复师','身体盟友','稳定推进者','习惯驯兽师','资源整理者','日常工程师','底盘构筑者','可靠的自己','筑基纪完成者',
+  '地图开拓者','未知侦察员','跨域学习者','认知采集者','支线发现者','机会探索者','路径扩容者','世界漫游者','多地图玩家','开拓纪完成者',
+  '边界建立者','拒绝练习生','注意力守门人','身体主权者','关系筛选者','时间主权者','价值校准者','选择权守卫','自我领土测绘师','主权纪完成者',
+  '经验炼金师','系统玩家','模型建造者','失败翻译官','长期资产构筑者','资源整合者','策略升级者','高阶策略家','世界建造者','构筑纪完成者',
+  '多线成长者','人生编剧','职业去中心者','兴趣复育者','关系自主者','迁移准备者','选择组合师','多结局探索者','参天大树·成长期','多线人生纪完成者',
+  '人生主理人','疆域守望者','时间领主','身体领主','注意力领主','资源领主','边界领主','选择权领主','自由领主','领主纪完成者',
+  '生活创造者','丰盛采集者','体验建筑师','关系共建者','身体庆典者','美感培育者','好奇心守护者','从容建设者','丰盛世界设计师','丰盛纪完成者',
+  '出口拥有者','机会不稀缺者','如水的野心·初阶','从容行动者','不被单局定义者','远方持有者','世界可选择者','如水的野心·高阶','自由航行者','自由纪完成者',
+  '归真者','力量收藏家','无需证明者','平常心持有者','当下生活者','温柔的强者','世界同行者','无唯一主线者','开放世界前夜','世界主权者'
+];
+
+const LEVEL_MESSAGES=[
+  '行动不是为了证明你足够好，而是在告诉现实：这一回合由你参与。',
+  '你开始把自己从一次次具体的输赢里分离出来。',
+  '世界正在变大，因为你的选择正在变多。',
+  '边界不是城墙的尽头，而是你的生活终于有了清晰的国境线。',
+  '所有吃过的亏，都可以留下地图；所有失败，都可以留下装备。',
+  '人生不需要只有一条主线。你正在获得真正的容错率。',
+  '你开始拥有自己的疆域，而不是借住在别人的期待里。',
+  '安全之后，还有丰盛。活着不只是为了躲开伤害，也为了创造喜欢。',
+  '真正的野心开始像水：不因为一场战役而蒸发，也不因为一次失败而枯竭。',
+  '最高级不是放弃野心，而是让野心得到兑现：你拥有足够的现实力量，可以继续征服，也可以安心享受已经赢来的世界。'
+];
+
+function xpForLevel(level){
+  const lv=clamp(Math.floor(Number(level)||1),1,100);
+  if(lv<=1)return 0;
+  const n=lv-1;
+  return Math.round(15*n*n+70*n);
+}
+function eraForLevel(level){
+  const lv=clamp(Number(level)||1,1,100);
+  return LIFE_ERAS.find(e=>lv>=e.min&&lv<=e.max)||LIFE_ERAS[LIFE_ERAS.length-1];
+}
+function levelInfo(xp){
+  const total=Math.max(0,Number(xp)||0);
+  let level=1;
+  for(let lv=2;lv<=100;lv++){if(total>=xpForLevel(lv))level=lv;else break}
+  const prev=xpForLevel(level);
+  const isMax=level>=100;
+  const next=isMax?null:xpForLevel(level+1);
+  const era=eraForLevel(level);
+  const eraIndex=LIFE_ERAS.indexOf(era);
+  const nextEra=LIFE_ERAS[eraIndex+1]||null;
+  return {
+    level,prev,next,isMax,era,nextEra,
+    title:LEVEL_TITLES[level-1]||'世界自由者',
+    message:LEVEL_MESSAGES[Math.min(9,Math.floor((level-1)/10))]
+  };
+}
+function getAttr(id){return state.attributes[id]}
+function attrLabel(id){return state.attributes[id]?.name||({intel:'情报',defense:'防御'}[id]||id)}
+function getRegion(id){return state.regions[id]}
+function firstRegionId(){return Object.keys(state.regions)[0]||null}
+function findRegionByHint(hints,fallback='cognition'){for(const [id,r] of Object.entries(state.regions)){if(hints.some(h=>r.name.includes(h)||r.desc.includes(h)))return id}return state.regions[fallback]?fallback:firstRegionId()}
+function findAttrByHint(hints,fallback=null){for(const [id,a] of Object.entries(state.attributes)){if(hints.some(h=>a.name.includes(h)))return id}return state.attributes[fallback]?fallback:Object.keys(state.attributes)[0]||null}
+
+
+function cleanDeprecatedEquipment(){
+  const banned=['咖啡buff','咖啡 buff','咖啡','降噪耳机'];
+  const bad=x=>{
+    const text=String(typeof x==='string'?x:(x?.name||x?.title||x?.label||'')).trim().toLowerCase();
+    return banned.some(k=>text.includes(k));
+  };
+  if(Array.isArray(state.inventory))state.inventory=state.inventory.filter(x=>!bad(x));
+  if(Array.isArray(state.buffs))state.buffs=state.buffs.filter(x=>!bad(x));
+}
+
+function render(){
+  cleanDeprecatedEquipment();
+  refreshRecurringTasks();
+  const li=levelInfo(state.xp);
+  byId('levelText').textContent=`Lv. ${li.level}`;
+  byId('classText').textContent=`「${li.title}」`;
+  byId('eraText').textContent=`${li.era.icon} ${li.era.name}`;
+  byId('milestoneText').textContent=li.isMax?'开放世界已解锁':(li.nextEra?`下一时代：${li.nextEra.name}`:`终点：世界主权者`);
+  byId('levelPhilosophy').textContent=li.message;
+  byId('totalXP').textContent=state.xp;
+  byId('nextXP').textContent=li.isMax?'OPEN WORLD':li.next;
+  if(li.isMax){
+    byId('xpHint').innerHTML='👑 实力等级已完成。XP 继续记录战绩；人生境界仍然是另一条独立的成长线。';
+    byId('overallBar').style.width='100%';
+  }else{
+    byId('xpHint').innerHTML=`距离下一等级还差 <span id="xpRemain">${Math.max(0,li.next-state.xp)}</span> XP`;
+    byId('overallBar').style.width=Math.min(100,((state.xp-li.prev)/(li.next-li.prev))*100)+'%';
+  }
+  byId('intelRes').textContent=state.resources.intel;byId('defRes').textContent=state.resources.defense;byId('streakRes').textContent=state.streak;byId('soundBtn').textContent=state.sound?'🔊 音效：开':'🔇 音效：关';
+  renderLifePath(li);
+  renderRealm();
+  renderAttributes();renderTasks();renderBosses();renderMap();renderAchievements();renderInventory();renderBestiary();renderSkills();refreshTaskRegionOptions();renderTaskRewardInputs();checkAchievements();byId('achCount').textContent=state.achievements.length;if(state.reports.length)byId('dailyReport').textContent=state.reports[0].text;renderDesktopCommandCenter();
+}
+function renderLifePath(li){
+  byId('currentEraTitle').textContent=`${li.era.icon} 当前：${li.era.name} · Lv.${li.level}`;
+  byId('currentEraDesc').textContent=li.era.desc;
+  if(li.isMax){
+    byId('nextEraTitle').textContent='🌌 下一阶段：没有标准答案';
+    byId('nextEraDesc').textContent='从现在开始，不再有系统替你规定主线。你可以继续积累 XP，但它只是旅途记录，不再是价值证明。';
+    byId('openWorldStatus').textContent='OPEN WORLD · 已解锁';
+  }else if(li.nextEra){
+    byId('nextEraTitle').textContent=`下一时代：${li.nextEra.icon} ${li.nextEra.name}`;
+    byId('nextEraDesc').textContent=li.nextEra.milestone;
+    byId('openWorldStatus').textContent=`距离开放世界还有 ${100-li.level} 级`;
+  }else{
+    byId('nextEraTitle').textContent='终点正在靠近：世界主权者';
+    byId('nextEraDesc').textContent='拥有力量，但不需要一直使用力量；拥有选择，而不被任何单一路径垄断。';
+    byId('openWorldStatus').textContent=`距离开放世界还有 ${100-li.level} 级`;
+  }
+  byId('eraTrack').innerHTML=LIFE_ERAS.map((e,i)=>{
+    const stateClass=li.level>e.max?'passed':(li.level>=e.min&&li.level<=e.max?'current':'future');
+    const mark=stateClass==='passed'?'✓':stateClass==='current'?'●':'○';
+    return `<div class="era-node ${stateClass}"><span class="node-state">${mark}</span><div class="era-levels">Lv.${e.min}–${e.max}</div><strong>${e.icon} ${escapeHtml(e.name)}</strong><span>${escapeHtml(e.short)}</span></div>`;
+  }).join('');
+  const vision=byId('endgameVision');
+  vision.classList.toggle('open',li.isMax);
+  vision.innerHTML=li.isMax
+    ? `<div class="endgame-title">👑 Lv.100 · 世界主权者</div><strong>最高权限：主线编辑器已解锁</strong><br>你前面的野心没有被取消，而是被兑现成了真正的战利品：更强的身体、更深的认知、更厚的资源、更大的迁移能力和更多现实选择权。<br><br><strong>你可以继续征服新的世界，也可以停下来享受已经赢得的一切。平常心不是奖杯；你的世界本身才是奖杯。</strong>`
+    : `<div class="endgame-title">终局不是让你学会“什么都不要”</div>Lv.100 的奖励是你的野心真正改变了现实：<strong>更强的身体、更高的能力、更厚的资源、更大的自由和属于自己的世界</strong>。平常心只是让你不会被单局输赢摧毁。<br><strong>最终权限：不是没有目标，而是由你自己创建主线。</strong>`;
+}
+function renderAttributes(){const entries=Object.values(state.attributes);byId('attributeGrid').innerHTML=entries.length?entries.map(a=>`<div class="attribute"><div class="attr-head"><span class="attr-name">${escapeHtml(a.icon)} ${escapeHtml(a.name)}</span><span class="attr-val">${Math.round(a.value)}</span></div><div class="attr-bar"><div class="attr-fill" style="width:${clamp(a.value,0,100)}%;background:linear-gradient(90deg,${a.color},${hexToRgba(a.color,.65)})"></div></div></div>`).join(''):'<div class="empty">还没有属性。点击「编辑属性」创建你的第一个属性。</div>'}
+function renderTasks(){
+  const list=visibleTodayTasks();
+  const settled=completedTodayTaskCount();
+  byId('todayTag').textContent=`今日已结算 ${settled} 次 · 当前 ${list.length} 项`;
+  byId('taskList').innerHTML=list.length?list.map(t=>{
+    const rs=[];
+    if(t.xp)rs.push(`<span class="reward">XP +${t.xp}</span>`);
+    for(const [k,v] of Object.entries(t.rewards||{})){
+      if(v&&state.attributes[k])rs.push(`<span class="reward purple">${escapeHtml(state.attributes[k].icon)} ${escapeHtml(attrLabel(k))} +${v}</span>`);
+    }
+    if(t.intel)rs.push(`<span class="reward blue">🧠 情报 +${t.intel}</span>`);
+    if(t.defense)rs.push(`<span class="reward green">🛡 防御 +${t.defense}</span>`);
+    const r=getRegion(t.region),kind=taskKindInfo(t.kind);
+    const badge=`<span class="task-kind-badge ${t.kind==='routine'?'routine':t.kind==='repeatable'?'repeatable':''}">${kind.icon} ${kind.label}</span>`;
+    const count=t.kind==='repeatable'?` <span class="task-repeat-count">今日 ×${Number(t.repeatCount||0)}</span>`:'';
+    return `<div class="task"><div class="task-main"><div><div class="task-title">□ ${escapeHtml(t.name)} ${badge}${count}</div><div class="task-meta">${r?escapeHtml(r.icon)+' '+escapeHtml(r.name):'🗺️ 未分类'}</div><div class="rewards">${rs.join('')}</div></div><div class="task-actions"><button class="btn small" onclick="completeTask('${t.id}',event)">${t.kind==='repeatable'?'再次结算':'完成任务'}</button><button class="btn ghost small" onclick="deleteTask('${t.id}')">删除</button></div></div></div>`;
+  }).join(''):'<div class="empty">今天当前没有待执行任务。常规任务会在第二天重新出现。</div>';
+}
+function renderBosses(){const list=[...state.bosses].sort((a,b)=>Number(b.id)-Number(a.id)).slice(0,8);byId('bossHistory').innerHTML=list.length?list.map(b=>{const outcome={loss:'没有击败 Boss',progress:'Boss 机制已解锁',win:'Boss 已击败'}[b.outcome]||'回合已结算';return `<div class="boss-card"><div class="boss-top"><div><div class="boss-name">${bossIcon(b.type)} ${escapeHtml(b.name)}</div><div class="boss-status">${outcome}</div></div><div style="text-align:right"><div class="muted" style="font-size:11px">下一回合胜率</div><div class="winrate">${b.after}%</div></div></div><div class="rewards"><span class="reward">🧠 情报 +${b.intel}</span><span class="reward purple">🛡 防御 +${b.defense}</span><span class="reward blue">XP +${b.xp}</span></div><div class="timeline"><span class="chance">${b.before}%</span><span class="arrow">→</span><span class="chance after">${b.after}%</span><span class="delta">${b.after>=b.before?'▲':'▼'} ${Math.abs(b.after-b.before)}%</span></div><div class="battle-report">${escapeHtml(makeBossReport(b))}</div></div>`}).join(''):'<div class="empty">还没有 Boss 战报。</div>'}
+
+function checkAchievements(){const cognition=findAttrByHint(['认知']);const defs=[['first_task','✨ 第一滴经验','完成第一个人生任务',state.completedTotal>=1],['ten_tasks','🔥 行动者','累计完成 10 个任务',state.completedTotal>=10],['intel50','🧠 情报商人','情报达到 50',state.resources.intel>=50],['def30','🛡 铠甲成型','防御达到 30',state.resources.defense>=30],['cognition60','🔭 世界模型升级','认知属性达到 60',cognition&&state.attributes[cognition]?.value>=60],['bosswin','👑 Boss Slayer','成功击败至少一个 Boss',state.bosses.some(b=>b.outcome==='win')],['reframe','🔍 失败炼金术','失败但获得了新情报',state.bosses.some(b=>b.outcome==='loss'&&b.intel>0)],['customworld','🗺️ 世界建造者','创建超过 8 个区域',Object.keys(state.regions).length>8],['customattr','🧬 自定义角色','创建超过 5 个属性',Object.keys(state.attributes).length>5]];let changed=false;defs.forEach(d=>{if(d[3]&&!state.achievements.includes(d[0])){state.achievements.push(d[0]);changed=true;setTimeout(()=>showToast(`🏆 成就解锁：${d[1]}`),80)}});if(changed){state.meta=state.meta||clone(defaultState.meta);state.meta.updatedAt=new Date().toISOString();persistStateOnly()}}
+function renderAchievements(){const defs=[['first_task','✨ 第一滴经验','完成第一个人生任务'],['ten_tasks','🔥 行动者','累计完成 10 个任务'],['intel50','🧠 情报商人','情报达到 50'],['def30','🛡 铠甲成型','防御达到 30'],['cognition60','🔭 世界模型升级','认知属性达到 60'],['bosswin','👑 Boss Slayer','成功击败至少一个 Boss'],['reframe','🔍 失败炼金术','失败但获得了新情报'],['customworld','🗺️ 世界建造者','创建超过 8 个区域'],['customattr','🧬 自定义角色','创建超过 5 个属性']];byId('achievementGrid').innerHTML=defs.map(d=>`<div class="achievement ${state.achievements.includes(d[0])?'':'locked'}"><strong>${d[1]}</strong><span>${d[2]}</span></div>`).join('')}
+function renderInventory(){byId('inventoryGrid').innerHTML=(state.inventory||[]).map(i=>`<div class="item-card"><div class="item-icon">${i.icon}</div><strong>${escapeHtml(i.name)}</strong><span>${escapeHtml(i.desc)}</span></div>`).join('')}
+function renderBestiary(){const groups={};(state.bosses||[]).forEach(b=>{const key=b.name;groups[key]=groups[key]||{name:key,type:b.type,count:0,wins:0,chance:0,last:''};const g=groups[key];g.count++;if(b.outcome==='win')g.wins++;g.chance=b.after;g.last=b.note||''});const list=Object.values(groups).sort((a,b)=>b.count-a.count).slice(0,8);byId('bestiaryGrid').innerHTML=list.length?list.map(g=>`<div class="bestiary-card"><strong>${bossIcon(g.type)} ${escapeHtml(g.name)}</strong><span>遭遇 ${g.count} 次 · 击败 ${g.wins} 次<br>已知胜率 ${g.chance}%${g.last?'<br>最新机制：'+escapeHtml(g.last.slice(0,70)):''}</span><div class="boss-meter"><div style="width:${g.chance}%"></div></div></div>`).join(''):'<div class="empty">遭遇 Boss 后，图鉴会自动记录。</div>'}
+function renderSkills(){const life=findAttrByHint(['生命'], 'life'),research=findAttrByHint(['科研'],'research'),combat=findAttrByHint(['战斗'],'combat'),freedom=findAttrByHint(['自由'],'freedom'),cognition=findAttrByHint(['认知'],'cognition');const defs=[['🧬','研究架构师','科研 ≥ 55','把模糊问题拆成可操作结构',research&&state.attributes[research].value>=55],['🧠','失败炼金术','情报 ≥ 40','把失败重新叙述为机制暴露',state.resources.intel>=40],['🔭','世界模型','认知 ≥ 55','跨主题研究开始形成自己的判断框架',cognition&&state.attributes[cognition].value>=55],['🥊','身体安全感','战斗力 ≥ 45','身体训练开始反向增强心理稳定',combat&&state.attributes[combat].value>=45],['🕊️','自由航线','自由度 ≥ 80','选择权足够多，不再把单一路径当唯一生路',freedom&&state.attributes[freedom].value>=80],['🌳','如水的野心','生命力 ≥ 90','大事来临时仍能照顾日常生活底盘',life&&state.attributes[life].value>=90]];byId('skillGrid').innerHTML=defs.map(d=>`<div class="skill-card ${d[4]?'unlocked':'locked'}"><strong>${d[0]} ${d[1]}</strong><span>${d[2]}<br>${d[3]}</span></div>`).join('')}
+
+function refreshTaskRegionOptions(){const sel=byId('taskRegion');if(!sel)return;const current=sel.value;sel.innerHTML=Object.values(state.regions).map(r=>`<option value="${r.id}">${escapeHtml(r.icon)} ${escapeHtml(r.name)}</option>`).join('');if(state.regions[current])sel.value=current}
+function renderTaskRewardInputs(){const box=byId('taskAttributeRewards');if(!box)return;const previous={};box.querySelectorAll('input[data-attr]').forEach(i=>previous[i.dataset.attr]=i.value);box.innerHTML=Object.values(state.attributes).map(a=>`<div class="reward-input"><div class="name">${escapeHtml(a.icon)} ${escapeHtml(a.name)}</div><input type="number" min="-100" max="100" value="${previous[a.id]??0}" data-attr="${a.id}"></div>`).join('')||'<div class="empty">先在「世界设定」里创建属性。</div>'}
+let selectedTaskKind='temporary';
+function chooseTaskKind(kind){
+  selectedTaskKind=['temporary','routine','repeatable'].includes(kind)?kind:'temporary';
+  document.querySelectorAll('#taskTypeChoices [data-task-kind]').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.taskKind===selectedTaskKind);
+  });
+}
+function taskKindInfo(kind){
+  if(kind==='routine')return {icon:'🔁',label:'常规'};
+  if(kind==='repeatable')return {icon:'♾️',label:'每日不限次'};
+  return {icon:'⚡',label:'临时'};
+}
+function refreshRecurringTasks(){
+  const d=today();
+  let changed=false;
+  for(const t of state.tasks){
+    t.kind=['temporary','routine','repeatable'].includes(t.kind)?t.kind:'temporary';
+    if(t.kind==='routine'&&t.date!==d){
+      t.date=d;t.done=false;changed=true;
+    }
+    if(t.kind==='repeatable'&&t.repeatDate!==d){
+      t.repeatDate=d;t.repeatCount=0;t.done=false;t.date=d;changed=true;
+    }
+  }
+  if(changed){
+    state.meta=state.meta||clone(defaultState.meta);
+    state.meta.revision=Number(state.meta.revision||0)+1;
+    state.meta.updatedAt=new Date().toISOString();
+    persistStateOnly();
+  }
+}
+function visibleTodayTasks(){
+  refreshRecurringTasks();
+  const d=today();
+  return state.tasks.filter(t=>t.date===d&&(t.kind==='repeatable'||!t.done));
+}
+function completedTodayTaskCount(){
+  const d=today();
+  return state.tasks.reduce((n,t)=>{
+    if(t.kind==='repeatable'&&t.repeatDate===d)return n+Number(t.repeatCount||0);
+    return n+(t.lastCompletedDate===d?1:0);
+  },0);
+}
+function completeRepeatableTask(t,event){
+  const oldLevel=levelInfo(state.xp).level;
+  t.repeatDate=today();
+  t.repeatCount=Number(t.repeatCount||0)+1;
+  t.date=today();
+  t.done=false;
+  t.lastCompletedDate=today();
+  state.completedTotal++;
+  state.xp+=Number(t.xp||0);
+  for(const [k,v] of Object.entries(t.rewards||{})){
+    if(state.attributes[k])state.attributes[k].value=clamp(state.attributes[k].value+Number(v||0),0,100);
+  }
+  state.resources.intel+=Number(t.intel||0);
+  state.resources.defense+=Number(t.defense||0);
+  if(state.regions[t.region])state.regions[t.region].progress=clamp(state.regions[t.region].progress+Math.max(1,Math.round((Number(t.xp)||0)/20)),0,100);
+  updateStreak();save();
+  spawnFX(event?.clientX||innerWidth/2,event?.clientY||innerHeight/2,`第 ${t.repeatCount} 次 +${t.xp} XP`);
+  playReward();generateDailyReport(false);
+  const newLevel=levelInfo(state.xp).level;
+  if(newLevel>oldLevel)setTimeout(()=>showLevelUp(newLevel),400);
+}
+
+
+function openTaskModal(){selectedTaskKind='temporary';chooseTaskKind('temporary');refreshTaskRegionOptions();renderTaskRewardInputs();byId('taskModal').classList.add('show');setTimeout(()=>byId('taskName').focus(),50)}
+function createTask(){const name=byId('taskName').value.trim();if(!name){showToast('先给任务起个名字。');return}const rewards={};document.querySelectorAll('#taskAttributeRewards input[data-attr]').forEach(i=>{const v=Number(i.value||0);if(v)rewards[i.dataset.attr]=v});state.tasks.push({id:makeId('task'),kind:selectedTaskKind,name,region:byId('taskRegion').value||firstRegionId(),xp:num('taskXP'),rewards,intel:num('taskIntel'),defense:num('taskDefense'),done:false,date:today(),lastCompletedDate:null,repeatDate:selectedTaskKind==='repeatable'?today():null,repeatCount:0});save();clearTaskForm();closeModal('taskModal');showToast(selectedTaskKind==='routine'?'🔁 常规任务已发布。':selectedTaskKind==='repeatable'?'♾️ 每日不限次任务已发布。':'📜 临时任务已发布。')}
+function clearTaskForm(){byId('taskName').value='';byId('taskXP').value=20;byId('taskIntel').value=0;byId('taskDefense').value=0;document.querySelectorAll('#taskAttributeRewards input').forEach(i=>i.value=0)}
+function completeTask(id,event){
+  const t=state.tasks.find(x=>String(x.id)===String(id));
+  if(!t)return;
+  if(t.kind==='repeatable')return completeRepeatableTask(t,event);
+  if(t.done)return;
+  const oldLevel=levelInfo(state.xp).level;
+  t.done=true;
+  t.lastCompletedDate=today();
+  state.completedTotal++;
+  state.xp+=Number(t.xp||0);
+  for(const [k,v] of Object.entries(t.rewards||{})){
+    if(state.attributes[k])state.attributes[k].value=clamp(state.attributes[k].value+Number(v||0),0,100);
+  }
+  state.resources.intel+=Number(t.intel||0);
+  state.resources.defense+=Number(t.defense||0);
+  if(state.regions[t.region])state.regions[t.region].progress=clamp(state.regions[t.region].progress+Math.max(1,Math.round((Number(t.xp)||0)/20)),0,100);
+  updateStreak();save();
+  spawnFX(event?.clientX||innerWidth/2,event?.clientY||innerHeight/2,`+${t.xp} XP`);
+  playReward();generateDailyReport(false);
+  const newLevel=levelInfo(state.xp).level;
+  if(newLevel>oldLevel)setTimeout(()=>showLevelUp(newLevel),400);
+}
+function deleteTask(id){state.tasks=state.tasks.filter(t=>String(t.id)!==String(id));save()}
+function updateStreak(){const d=today();if(state.lastActiveDate===d)return;const y=new Date();y.setDate(y.getDate()-1);const yd=y.toISOString().slice(0,10);state.streak=state.lastActiveDate===yd?state.streak+1:1;state.lastActiveDate=d}
+
+function openBossModal(){byId('bossModal').classList.add('show')}
+function recordBoss(){const name=byId('bossName').value.trim();if(!name){showToast('先给 Boss 起个名字。');return}const b={id:Date.now(),type:byId('bossType').value,name,outcome:byId('bossOutcome').value,before:clamp(num('bossBefore'),0,100),after:clamp(num('bossAfter'),0,100),intel:num('bossIntel'),defense:num('bossDefense'),xp:num('bossXP'),note:byId('bossNote').value.trim(),date:today()};const oldLevel=levelInfo(state.xp).level;state.bosses.push(b);state.xp+=b.xp;state.resources.intel+=b.intel;state.resources.defense+=b.defense;updateStreak();save();closeModal('bossModal');byId('bossName').value='';byId('bossNote').value='';playBoss();spawnFX(innerWidth*.55,innerHeight*.35,`情报 +${b.intel}`);generateDailyReport(false);const newLevel=levelInfo(state.xp).level;if(newLevel>oldLevel)setTimeout(()=>showLevelUp(newLevel),450)}
+function bossIcon(type){return {论文:'🧬',面试:'🎤',工作:'🏥',身体:'🥊',关系:'🧩',决策:'🧠',自定义:'👹'}[type]||'👹'}
+
+function openEventModal(){byId('eventModal').classList.add('show');setTimeout(()=>byId('eventText').focus(),50)}
+function analyzeRealityEvent(text){const raw=(text||'').trim(),lower=raw.toLowerCase();const has=(...ks)=>ks.some(k=>raw.includes(k)||lower.includes(k.toLowerCase()));const cognitionRegion=findRegionByHint(['认知','知识','世界模型'],'cognition'),wealthRegion=findRegionByHint(['财富','决策','消费','资产'],'wealth'),researchRegion=findRegionByHint(['科研','研究'],'research'),healthRegion=findRegionByHint(['生命','健康','身体'],'health'),careerRegion=findRegionByHint(['职业','自由'],'career'),englishRegion=findRegionByHint(['英语'],'english'),interestRegion=findRegionByHint(['兴趣','艺术','体验'],'interests'),relationRegion=findRegionByHint(['关系','人际'],'relationships');const cognitionAttr=findAttrByHint(['认知'],'cognition'),researchAttr=findAttrByHint(['科研'],'research'),lifeAttr=findAttrByHint(['生命'],'life'),combatAttr=findAttrByHint(['战斗'],'combat'),freedomAttr=findAttrByHint(['自由'],'freedom');let r={title:'随机事件',icon:'✨',xp:12,rewards:{},intel:2,defense:0,region:cognitionRegion,kind:'event',summary:'你没有让这一天无痕消失：它已经被转化成可见经验。'};const add=(id,v)=>{if(id)r.rewards[id]=v};
+  if(has('医疗保险','商业保险','百万医疗','重疾险','医疗险','续保','外购药','靶向药','保险')){r={...r,title:'保障机制研究',icon:'🛡️',xp:22,intel:7,defense:2,region:wealthRegion||cognitionRegion,summary:'你不是在被动担心风险，而是在拆解保障条款、疾病成本和风险转移机制。'};add(cognitionAttr,4);add(freedomAttr,1)}
+  else if(has('汽车','车','model y','yu7','su7','轮胎','aeb','ads','智驾')){r={...r,title:'现实装备研究',icon:'🚗',xp:20,intel:6,defense:0,region:cognitionRegion,summary:'参数、体验和真实使用场景正在被整理成你的判断模型，而不只是消费冲动。'};add(cognitionAttr,4)}
+  else if(has('经济学','社会','制度','女性主义','理论','塔勒布','克里斯坦森','心理学','认知','研究了','查了','比较了','了解了')){r={...r,title:'认知大陆推进',icon:'🧠',xp:20,intel:7,region:cognitionRegion,summary:'零散信息正在织成更稳定的世界模型。'};add(cognitionAttr,4)}
+  else if(has('拒稿','被拒','审稿','reviewer','reject')){r={...r,title:'Boss 回合：审稿机制暴露',icon:'👹',xp:28,intel:12,defense:5,region:researchRegion,kind:'boss',summary:'没有击败 Boss，但关键机制已经暴露。下一回合不再从零开始。'};add(researchAttr,2)}
+  else if(has('论文','文献','科研','faers','统计','pt词表','meddra','投稿')){r={...r,title:'科研大陆推进',icon:'🧬',xp:20,intel:5,region:researchRegion,summary:'知识已经变成研究地图上的已探索区域。'};add(researchAttr,3)}
+  else if(has('面试','crp','跳槽','职业','简历','工作机会')){r={...r,title:'自由城邦情报更新',icon:'🏙️',xp:22,intel:6,defense:2,region:careerRegion,summary:'你正在扩大选择权。出口已经比昨天更多。'};add(freedomAttr,3)}
+  else if(has('健身','拳击','壶铃','力量','pr','跑步','训练','滑雪','街舞')){r={...r,title:'身体能力突破',icon:'🥊',xp:20,intel:0,region:healthRegion,summary:'身体不是装饰，而是现实世界里的基础战斗单位。'};add(lifeAttr,3);add(combatAttr,4)}
+  else if(has('睡眠','休息','感冒','生病','恢复','请假')){r={...r,title:'生命值维护回合',icon:'🌲',xp:14,intel:0,defense:2,region:healthRegion,summary:'保护生命值不是逃避主线，而是在确保角色不会因为透支而掉线。'};add(lifeAttr,4)}
+  else if(has('英语','英文','口语','听力')){r={...r,title:'英语海域航行',icon:'🗣️',xp:18,intel:2,region:englishRegion,summary:'每一次表达练习都在增加未来地图的可进入区域。'};add(freedomAttr,3)}
+  else if(has('冲突','吵架','被批评','冷漠','同事','师姐','轮转','值班','家人','前任','关系')){r={...r,title:'关系 Boss 交锋',icon:'🧩',xp:18,intel:5,defense:5,region:relationRegion,kind:'boss',summary:'这一回合的价值不只是输赢：你正在识别机制并校准边界。'}}
+  else if(has('画画','油画','声乐','舞蹈','兴趣','旅行','露营')){r={...r,title:'自由支线已开启',icon:'🎨',xp:16,intel:1,region:interestRegion,summary:'不是所有成长都要服务职业。新的支线本身就在扩大人生世界。'};add(freedomAttr,4);add(lifeAttr,2)}
+  return {...r,text:raw,date:today()}}
+function rewardPills(r){const arr=[`<span class="reward">XP +${r.xp}</span>`];for(const [k,v] of Object.entries(r.rewards||{})){if(v&&state.attributes[k])arr.push(`<span class="reward purple">${escapeHtml(state.attributes[k].icon)} ${escapeHtml(attrLabel(k))} +${v}</span>`)}if(r.intel)arr.push(`<span class="reward blue">🧠 情报 +${r.intel}</span>`);if(r.defense)arr.push(`<span class="reward green">🛡 防御 +${r.defense}</span>`);return arr.join('')}
+function previewMarkup(r,source){const region=getRegion(r.region);return `<h3>${r.icon} ${escapeHtml(r.title)}</h3><div class="muted" style="line-height:1.6">${escapeHtml(r.summary)}</div><div class="task-meta" style="margin-top:8px">归属：${region?escapeHtml(region.icon)+' '+escapeHtml(region.name):'未分类'}</div><div class="event-stats">${rewardPills(r)}</div><div class="top-actions" style="justify-content:flex-start;margin-top:12px"><button class="btn small" onclick="commitRealityEvent('${source}')">确认结算</button></div>`}
+function previewEvent(){const r=analyzeRealityEvent(byId('eventText').value);window._eventPreview=r;byId('eventPreview').innerHTML=previewMarkup(r,'modal');byId('eventPreview').classList.add('show')}
+function previewEventFromQuickBox(){const r=analyzeRealityEvent(byId('quickEventText').value);window._quickEventPreview=r;byId('quickEventPreview').innerHTML=previewMarkup(r,'quick');byId('quickEventPreview').classList.add('show')}
+function commitRealityEvent(source){const r=source==='quick'?window._quickEventPreview:window._eventPreview;if(!r||!r.text){showToast('先写下今天发生的事情。');return}const oldLevel=levelInfo(state.xp).level;state.events.unshift({...r,id:Date.now()});state.xp+=r.xp;for(const [k,v] of Object.entries(r.rewards||{})){if(state.attributes[k])state.attributes[k].value=clamp(state.attributes[k].value+v,0,100)}state.resources.intel+=r.intel||0;state.resources.defense+=r.defense||0;if(state.regions[r.region])state.regions[r.region].progress=clamp(state.regions[r.region].progress+2,0,100);updateStreak();if(r.kind==='boss'){const before=Math.max(20,Math.min(75,40+Math.floor(state.resources.intel/12))),after=clamp(before+8+Math.floor((r.intel||0)/2),0,95);state.bosses.push({id:Date.now()+1,type:'自定义',name:r.title,outcome:'progress',before,after,intel:r.intel||0,defense:r.defense||0,xp:0,note:r.text,date:today()})}save();spawnFX(innerWidth/2,innerHeight/2,`+${r.xp} XP`);playReward();generateDailyReport(false);showToast(`${r.icon} 现实事件已转化为成长。`);if(source==='quick'){byId('quickEventText').value='';byId('quickEventPreview').classList.remove('show')}else{byId('eventText').value='';byId('eventPreview').classList.remove('show');closeModal('eventModal')}const newLevel=levelInfo(state.xp).level;if(newLevel>oldLevel)setTimeout(()=>showLevelUp(newLevel),450)}
+
+function generateDailyReport(show=true){const tasks=state.tasks.filter(t=>t.date===today()),done=tasks.filter(t=>t.done),bosses=state.bosses.filter(b=>b.date===today()),events=state.events.filter(e=>e.date===today());const activeRegions={};done.forEach(t=>{const r=getRegion(t.region);if(r)activeRegions[r.name]=(activeRegions[r.name]||0)+1});events.forEach(e=>{const r=getRegion(e.region);if(r)activeRegions[r.name]=(activeRegions[r.name]||0)+1});let text='';if(!done.length&&!bosses.length&&!events.length)text='今天的剧情尚未开始。但你随时可以研究一个真正好奇的问题，把它变成认知资源。';else{const regionText=Object.entries(activeRegions).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([n,c])=>`${n}推进 ${c} 格`).join('，');text=`今日完成 ${done.length} 个任务，翻译 ${events.length} 个现实事件${bosses.length?`，经历 ${bosses.length} 个 Boss 回合`:''}。${regionText?`主要地图变化：${regionText}。`:''}你获得的不是一串待办勾选，而是一份越来越厚的角色存档。`}state.reports.unshift({date:today(),text});state.reports=state.reports.slice(0,30);byId('dailyReport').textContent=text;persistStateOnly();if(show)showToast('📖 今日战报已生成。')}
+function copyReport(){navigator.clipboard?.writeText(byId('dailyReport').textContent).then(()=>showToast('战报已复制。')).catch(()=>showToast('浏览器未允许自动复制，请手动选择文字。'))}
+
+function openWorldSettings(section=null,fromTask=false){window._settingsReturnToTask=!!fromTask;renderSettings();byId('settingsModal').classList.add('show');if(section){setTimeout(()=>byId(section==='attributes'?'attributesSettingsSection':'regionsSettingsSection').scrollIntoView({behavior:'smooth',block:'start'}),100)}}
+function renderSettings(){byId('regionSettingsList').innerHTML=Object.values(state.regions).map(r=>`<div class="setting-row" data-region-id="${r.id}"><input aria-label="图标" value="${escapeHtml(r.icon)}" onchange="updateRegionField('${r.id}','icon',this.value)"><input aria-label="名称" value="${escapeHtml(r.name)}" onchange="updateRegionField('${r.id}','name',this.value)"><input class="wide-field" aria-label="描述" value="${escapeHtml(r.desc)}" onchange="updateRegionField('${r.id}','desc',this.value)"><input type="color" aria-label="颜色" value="${r.color}" onchange="updateRegionField('${r.id}','color',this.value)"><button class="btn danger delete-x" onclick="deleteRegion('${r.id}')">×</button></div>`).join('')||'<div class="empty">还没有区域。</div>';byId('attributeSettingsList').innerHTML=Object.values(state.attributes).map(a=>`<div class="setting-row attribute-row" data-attr-id="${a.id}"><input aria-label="图标" value="${escapeHtml(a.icon)}" onchange="updateAttributeField('${a.id}','icon',this.value)"><input aria-label="名称" value="${escapeHtml(a.name)}" onchange="updateAttributeField('${a.id}','name',this.value)"><input type="number" min="0" max="100" aria-label="数值" value="${a.value}" onchange="updateAttributeField('${a.id}','value',this.value)"><input type="color" aria-label="颜色" value="${a.color}" onchange="updateAttributeField('${a.id}','color',this.value)"><button class="btn danger delete-x" onclick="deleteAttribute('${a.id}')">×</button></div>`).join('')||'<div class="empty">还没有属性。</div>'}
+function addRegion(){const id=makeId('region');state.regions[id]={id,name:'新区域',icon:'🗺️',desc:'点击这里改成你自己的世界区域',progress:0,color:palette[Object.keys(state.regions).length%palette.length]};save(false);renderSettings();render();showToast('🗺️ 已创建新区域，直接修改名称即可。')}
+function addAttribute(){const id=makeId('attr');state.attributes[id]={id,name:'新属性',icon:'✨',value:0,color:palette[Object.keys(state.attributes).length%palette.length]};save(false);renderSettings();render();showToast('✨ 已创建新属性。它已经出现在任务奖励里。')}
+function updateRegionField(id,field,value){if(!state.regions[id])return;if(field==='progress')value=clamp(Number(value||0),0,100);state.regions[id][field]=value;save(false);renderMap();refreshTaskRegionOptions()}
+function updateAttributeField(id,field,value){if(!state.attributes[id])return;if(field==='value')value=clamp(Number(value||0),0,100);state.attributes[id][field]=value;save(false);renderAttributes();renderTaskRewardInputs();renderSkills()}
+function deleteRegion(id){if(Object.keys(state.regions).length<=1){showToast('至少保留一个区域。');return}const r=state.regions[id];if(!confirm(`删除区域「${r.name}」吗？这个区域里的旧任务会移动到其他区域。`))return;delete state.regions[id];const fallback=firstRegionId();state.tasks.forEach(t=>{if(t.region===id)t.region=fallback});state.events.forEach(e=>{if(e.region===id)e.region=fallback});save(false);renderSettings();render();showToast('区域已删除，旧记录已迁移。')}
+function deleteAttribute(id){const a=state.attributes[id];if(!a)return;if(!confirm(`删除属性「${a.name}」吗？旧任务里给这个属性的奖励也会被移除。`))return;delete state.attributes[id];state.tasks.forEach(t=>{if(t.rewards)delete t.rewards[id]});state.events.forEach(e=>{if(e.rewards)delete e.rewards[id]});save(false);renderSettings();render();showToast('属性已删除。')}
+
+function toggleSound(){state.sound=!state.sound;save();if(state.sound)playReward()}
+function tone(freq,delay=.0,dur=.16,type='triangle',vol=.04){if(!state.sound)return;try{const AC=window.AudioContext||window.webkitAudioContext;window._ac=window._ac||new AC();const ac=window._ac,o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,ac.currentTime+delay);g.gain.linearRampToValueAtTime(vol,ac.currentTime+delay+.02);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+delay+dur);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+delay);o.stop(ac.currentTime+delay+dur+.03)}catch(e){}}
+function playReward(){tone(523,0,.18);tone(659,.12,.2);tone(784,.24,.3)}function playBoss(){tone(220,0,.2,'sawtooth',.03);tone(330,.13,.22);tone(494,.27,.32)}function playLevel(){tone(523,0,.2);tone(659,.13,.2);tone(784,.26,.2);tone(1047,.42,.55,'triangle',.06)}
+function spawnFX(x,y,text){const layer=byId('fxLayer'),f=document.createElement('div');f.className='xp-float';f.textContent=text;f.style.left=(x-30)+'px';f.style.top=(y-10)+'px';layer.appendChild(f);setTimeout(()=>f.remove(),1400);for(let i=0;i<12;i++){const s=document.createElement('div');s.className='spark';s.style.left=x+'px';s.style.top=y+'px';s.style.setProperty('--dx',(Math.random()*150-75)+'px');s.style.setProperty('--dy',(Math.random()*120-80)+'px');layer.appendChild(s);setTimeout(()=>s.remove(),1100)}}
+function showLevelUp(level){
+  const li=levelInfo(state.xp),shown=clamp(Number(level)||li.level,1,100),info={...levelInfo(xpForLevel(shown)),level:shown};
+  byId('levelupTitle').textContent=`Lv. ${shown}`;
+  byId('levelupEra').textContent=`${info.era.icon} ${info.era.name}`;
+  byId('levelupName').textContent=`「${info.title}」`;
+  byId('levelupMessage').textContent=shown>=100
+    ? '野心得到了嘉奖。你已经拥有创建主线的权限：继续征服、创造、探索，或者享受已经赢来的世界，都由你决定。'
+    : info.message;
+  byId('levelupKicker').textContent=shown>=100?'OPEN WORLD UNLOCKED':'LEVEL UP';
+  byId('levelup').classList.add('show');playLevel();
+  for(let i=0;i<(shown>=100?12:5);i++)setTimeout(()=>spawnFX(innerWidth*(.3+Math.random()*.4),innerHeight*(.4+Math.random()*.2),shown>=100?'🌌':'✨'),i*80)
+}function closeLevelUp(){byId('levelup').classList.remove('show')}
+function showToast(msg){const t=byId('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+function closeModal(id){byId(id).classList.remove('show');if(id==='settingsModal'&&window._settingsReturnToTask){window._settingsReturnToTask=false;openTaskModal()}}
+
+
+
+// ===== iPhone mobile navigation =====
+let currentMobileView=localStorage.getItem('ckLifeEngineMobileView')||'home';
+function isPhoneLayout(){return window.matchMedia('(max-width:760px)').matches}
+function switchMobileView(view){
+  currentMobileView=view;
+  localStorage.setItem('ckLifeEngineMobileView',view);
+  document.querySelectorAll('[data-mobile-view]').forEach(el=>{
+    el.classList.toggle('mobile-view-active',el.dataset.mobileView===view);
+  });
+  document.querySelectorAll('[data-mobile-nav]').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.mobileNav===view);
+  });
+  closeMobileActions();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function applyMobileView(){
+  if(!isPhoneLayout()){
+    document.querySelectorAll('[data-mobile-view]').forEach(el=>el.classList.add('mobile-view-active'));
+    return;
+  }
+  switchMobileView(currentMobileView);
+}
+function openMobileActions(){
+  byId('mobileActionSheet')?.classList.add('show');
+  document.body.classList.add('mobile-sheet-open');
+}
+function closeMobileActions(){
+  byId('mobileActionSheet')?.classList.remove('show');
+  document.body.classList.remove('mobile-sheet-open');
+}
+function mobileQuickAction(type){
+  closeMobileActions();
+  if(type==='task')openTaskModal();
+  if(type==='event')openEventModal();
+  if(type==='boss')openBossModal();
+  if(type==='settings')openWorldSettings();
+  if(type==='insight')openInsightModal();
+}
+window.addEventListener('resize',applyMobileView);
+window.addEventListener('orientationchange',()=>setTimeout(applyMobileView,120));
+
+// ===== CK Cloud World =====
+const CLOUD_META_KEY='ckLifeEngineCloudMetaV1';
+const CLOUD_TABLE='life_engine_saves';
+let cloudClient=null;
+let cloudSession=null;
+let cloudSaveTimer=null;
+let cloudApplyingRemote=false;
+let cloudBusy=false;
+let cloudConflictRemote=null;
+let cloudStatus='offline';
+let cloudMeta=loadCloudMeta();
+
+function loadCloudMeta(){
+  try{
+    const raw=localStorage.getItem(CLOUD_META_KEY);
+    return raw?JSON.parse(raw):{lastServerRevision:0,lastSyncedStateRevision:0,lastSyncedAt:''};
+  }catch(e){return {lastServerRevision:0,lastSyncedStateRevision:0,lastSyncedAt:''}}
+}
+function saveCloudMeta(){
+  try{localStorage.setItem(CLOUD_META_KEY,JSON.stringify(cloudMeta))}catch(e){}
+}
+const CLOUD_RUNTIME_CONFIG_KEY='ckLifeEngineRuntimeCloudConfigV1';
+function loadRuntimeCloudConfig(){
+  try{return JSON.parse(localStorage.getItem(CLOUD_RUNTIME_CONFIG_KEY)||'{}')}catch(e){return {}}
+}
+
+let cloudConfigEditorForced=false;
+
+function maskedCloudUrl(){
+  const c=cloudConfig();
+  if(!c.url)return '尚未填写 Project URL';
+  try{
+    const u=new URL(c.url);
+    return u.origin;
+  }catch(e){
+    return c.url;
+  }
+}
+function showCloudConfigEditor(){
+  cloudConfigEditorForced=true;
+  const c=cloudConfig();
+  if(byId('runtimeSupabaseUrl'))byId('runtimeSupabaseUrl').value=c.url||'';
+  if(byId('runtimeSupabaseKey'))byId('runtimeSupabaseKey').value=c.key||'';
+  updateCloudModalUI();
+  setTimeout(()=>byId('runtimeSupabaseUrl')?.focus(),50);
+}
+function hideCloudConfigEditor(){
+  if(!isCloudConfigured()){
+    showToast('配置尚不完整，不能返回登录页。');
+    return;
+  }
+  cloudConfigEditorForced=false;
+  updateCloudModalUI();
+}
+async function ensureCloudClient(){
+  if(cloudClient)return true;
+  if(!isCloudConfigured()){
+    cloudConfigEditorForced=true;
+    updateCloudModalUI();
+    showToast('请先填写 Project URL 和 Publishable key。');
+    return false;
+  }
+  await initCloud();
+  if(cloudClient)return true;
+  cloudConfigEditorForced=true;
+  updateCloudModalUI();
+  showToast('Supabase 客户端未能建立。请检查 URL、Publishable key 和网络后重新保存。');
+  return false;
+}
+
+function cloudConfig(){
+  const runtime=loadRuntimeCloudConfig();
+  const c=window.CK_CLOUD_CONFIG||{};
+  return {
+    url:String(runtime.supabaseUrl||c.supabaseUrl||'').trim(),
+    key:String(runtime.supabaseKey||c.supabaseKey||'').trim()
+  };
+}
+async function saveRuntimeCloudConfig(){
+  const url=String(byId('runtimeSupabaseUrl')?.value||'').trim().replace(/\/+$/,'');
+  const key=String(byId('runtimeSupabaseKey')?.value||'').trim();
+  if(!/^https:\/\/[a-zA-Z0-9-]+\.supabase\.co$/.test(url)){
+    return showToast('Project URL 格式不对，应类似 https://xxxx.supabase.co');
+  }
+  if(!key.startsWith('sb_publishable_')){
+    return showToast('请填写 sb_publishable_ 开头的 Publishable key。');
+  }
+  localStorage.setItem(CLOUD_RUNTIME_CONFIG_KEY,JSON.stringify({
+    supabaseUrl:url,
+    supabaseKey:key
+  }));
+  if(cloudClient){
+    try{await cloudClient.auth.signOut()}catch(e){}
+  }
+  cloudClient=null;
+  cloudSession=null;
+  cloudConfigEditorForced=false;
+  setCloudStatus('syncing','云同步：正在连接…');
+  await initCloud();
+  if(!cloudClient){
+    cloudConfigEditorForced=true;
+    setCloudStatus('error','云同步：配置连接失败');
+    updateCloudModalUI();
+    return showToast('配置已保存，但连接失败。请检查网络、URL 和 Publishable key。');
+  }
+  updateCloudModalUI();
+  showToast('☁️ 云端配置已保存。现在可以登录。');
+}
+function isCloudConfigured(){
+  const c=cloudConfig();
+  return /^https:\/\/.+\.supabase\.co\/?$/.test(c.url)&&c.key&&!c.key.includes('PASTE_');
+}
+function cloudLocalHasUnsyncedChanges(){
+  return Number(state?.meta?.revision||0)>Number(cloudMeta.lastSyncedStateRevision||0);
+}
+function setCloudStatus(status,message=''){
+  cloudStatus=status;
+  const dot=byId('cloudStatusDot'),text=byId('cloudStatusText');
+  if(dot)dot.className='cloud-dot '+(status==='synced'?'synced':status==='syncing'?'syncing':status==='conflict'?'conflict':status==='error'?'error':status==='pending'?'pending':'');
+  const labels={
+    unconfigured:'云同步：未配置',
+    signedout:'云同步：未登录',
+    syncing:'云同步：同步中…',
+    synced:'云同步：已同步',
+    pending:'云同步：等待联网',
+    conflict:'云同步：有冲突',
+    error:'云同步：需检查',
+    offline:'云同步：本机模式'
+  };
+  if(text)text.textContent=message||labels[status]||'云同步';
+  updateCloudModalUI();
+  updateSaveStatus();
+}
+function updateCloudModalUI(){
+  const configured=isCloudConfigured();
+  const loggedIn=!!cloudSession?.user;
+  const showEditor=!configured||cloudConfigEditorForced;
+  const missing=byId('cloudConfigMissing');
+  const out=byId('cloudLoggedOutBox');
+  const inside=byId('cloudLoggedInBox');
+  const summary=byId('cloudConfigSummary');
+  const back=byId('cloudConfigBackBtn');
+
+  if(missing){
+    missing.classList.toggle('hidden',!showEditor);
+    missing.classList.toggle('cloud-editor-forced',showEditor);
+  }
+  if(out)out.classList.toggle('hidden',showEditor||loggedIn);
+  if(inside)inside.classList.toggle('hidden',!loggedIn||showEditor);
+  if(summary)summary.classList.toggle('hidden',!configured);
+  if(back)back.classList.toggle('hidden',!configured);
+  if(byId('cloudConfigSummaryUrl'))byId('cloudConfigSummaryUrl').textContent=maskedCloudUrl();
+  if(byId('cloudUserEmail'))byId('cloudUserEmail').textContent=cloudSession?.user?.email||'—';
+
+  if(byId('cloudModalTitle')){
+    if(showEditor){
+      byId('cloudModalTitle').textContent=configured?'修改 Supabase 云端配置':'还差一步：填写 Supabase 配置';
+    }else if(!loggedIn){
+      byId('cloudModalTitle').textContent=cloudClient
+        ?'云端已配置，请登录你的角色账号'
+        :'配置已保存，正在重新建立连接';
+    }else if(cloudStatus==='conflict'){
+      byId('cloudModalTitle').textContent='需要你决定保留哪个版本';
+    }else if(cloudStatus==='syncing'){
+      byId('cloudModalTitle').textContent='正在同步角色存档…';
+    }else if(cloudStatus==='synced'){
+      byId('cloudModalTitle').textContent='✅ 角色存档已连接云端';
+    }else{
+      byId('cloudModalTitle').textContent='云端已连接，本地存档也仍然保留';
+    }
+  }
+
+  if(byId('cloudModalDetail')){
+    const when=cloudMeta.lastSyncedAt
+      ?new Date(cloudMeta.lastSyncedAt).toLocaleString('zh-CN')
+      :'尚未完成首次同步';
+    if(showEditor){
+      byId('cloudModalDetail').textContent='配置只保存在当前浏览器中。修改后会重新建立 Supabase 客户端。';
+    }else if(loggedIn){
+      byId('cloudModalDetail').textContent=`最近同步：${when} ｜ 云端版本：${cloudMeta.lastServerRevision||0}`;
+    }else{
+      byId('cloudModalDetail').textContent='本地存档始终保留；登录后，电脑版与手机版进入同一个角色。';
+    }
+  }
+}
+async function openCloudModal(){
+  const c=cloudConfig();
+  if(byId('runtimeSupabaseUrl'))byId('runtimeSupabaseUrl').value=c.url||'';
+  if(byId('runtimeSupabaseKey'))byId('runtimeSupabaseKey').value=c.key||'';
+  cloudConfigEditorForced=!isCloudConfigured();
+  updateCloudModalUI();
+  byId('cloudModal').classList.add('show');
+  if(isCloudConfigured()&&!cloudClient){
+    setCloudStatus('syncing','云同步：正在重新连接…');
+    await initCloud();
+    updateCloudModalUI();
+  }
+}
+function cloudCanonicalUrl(){
+  return location.origin+location.pathname;
+}
+async function initCloud(){
+  if(!isCloudConfigured()){
+    setCloudStatus('unconfigured');
+    return;
+  }
+  if(!window.supabase?.createClient){
+    setCloudStatus('error','云同步：组件加载失败');
+    return;
+  }
+  const c=cloudConfig();
+  try{
+    cloudClient=window.supabase.createClient(c.url,c.key,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+    });
+    cloudClient.auth.onAuthStateChange((event,session)=>{
+      cloudSession=session;
+      updateCloudModalUI();
+      if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'))setTimeout(()=>bootstrapCloudSync(),0);
+      if(event==='SIGNED_OUT'){cloudSession=null;setCloudStatus('signedout')}
+    });
+    const {data,error}=await cloudClient.auth.getSession();
+    if(error)throw error;
+    cloudSession=data.session;
+    if(cloudSession?.user)await bootstrapCloudSync();
+    else setCloudStatus('signedout');
+  }catch(e){
+    console.error(e);
+    cloudClient=null;
+    cloudSession=null;
+    setCloudStatus('error','云同步：连接失败');
+    updateCloudModalUI();
+  }
+}
+async function cloudSignUp(){
+  if(!(await ensureCloudClient()))return;
+  const email=byId('cloudEmail').value.trim(),password=byId('cloudPassword').value;
+  if(!email||password.length<6)return showToast('请输入邮箱和至少 6 位密码。');
+  setCloudStatus('syncing','正在注册…');
+  const {data,error}=await cloudClient.auth.signUp({
+    email,password,options:{emailRedirectTo:cloudCanonicalUrl()}
+  });
+  if(error){setCloudStatus('error','注册失败');return showToast('注册失败：'+error.message)}
+  if(data.session){
+    cloudSession=data.session;showToast('✅ 注册成功，已经登录。');await bootstrapCloudSync();
+  }else{
+    setCloudStatus('signedout');
+    showToast('📮 注册成功。请去邮箱点确认链接，再回来登录。');
+  }
+}
+async function cloudSignIn(){
+  if(!(await ensureCloudClient()))return;
+  const email=byId('cloudEmail').value.trim(),password=byId('cloudPassword').value;
+  if(!email||!password)return showToast('请输入邮箱和密码。');
+  setCloudStatus('syncing','正在登录…');
+  const {data,error}=await cloudClient.auth.signInWithPassword({email,password});
+  if(error){setCloudStatus('error','登录失败');return showToast('登录失败：'+error.message)}
+  cloudSession=data.session;showToast('✅ 已登录云端角色。');await bootstrapCloudSync();
+}
+async function cloudSignOut(){
+  if(!cloudClient)return;
+  await cloudClient.auth.signOut();
+  cloudSession=null;
+  setCloudStatus('signedout');
+  showToast('已退出云端账号。本机存档仍然保留。');
+}
+async function fetchCloudRow(){
+  if(!cloudClient||!cloudSession?.user)return {data:null,error:null};
+  return await cloudClient.from(CLOUD_TABLE)
+    .select('state,revision,updated_at')
+    .eq('user_id',cloudSession.user.id)
+    .maybeSingle();
+}
+function applyRemoteState(row){
+  if(!row?.state)return;
+  cloudApplyingRemote=true;
+  state=migrateLegacy(row.state);
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
+  saveToIndexedDB(state);
+  cloudMeta.lastServerRevision=Number(row.revision||0);
+  cloudMeta.lastSyncedStateRevision=Number(state?.meta?.revision||0);
+  cloudMeta.lastSyncedAt=row.updated_at||new Date().toISOString();
+  saveCloudMeta();
+  cloudApplyingRemote=false;
+  render();
+  setCloudStatus('synced');
+}
+function showCloudConflict(row){
+  cloudConflictRemote=row;
+  setCloudStatus('conflict');
+  const box=byId('cloudConflictBox');
+  if(box)box.classList.remove('hidden');
+  const localDate=state?.meta?.updatedAt?new Date(state.meta.updatedAt).toLocaleString('zh-CN'):'未知时间';
+  const remoteState=row?.state||{};
+  const remoteDate=remoteState?.meta?.updatedAt?new Date(remoteState.meta.updatedAt).toLocaleString('zh-CN'):(row?.updated_at?new Date(row.updated_at).toLocaleString('zh-CN'):'未知时间');
+  if(byId('conflictLocalInfo'))byId('conflictLocalInfo').textContent=`角色数据修订 ${state?.meta?.revision||0} ｜ ${localDate}`;
+  if(byId('conflictRemoteInfo'))byId('conflictRemoteInfo').textContent=`云端版本 ${row?.revision||0} ｜ ${remoteDate}`;
+  openCloudModal();
+}
+async function bootstrapCloudSync(){
+  if(cloudBusy||!cloudSession?.user)return;
+  cloudBusy=true;setCloudStatus('syncing');
+  try{
+    const {data,error}=await fetchCloudRow();
+    if(error)throw error;
+    if(!data){
+      cloudMeta.lastServerRevision=0;
+      saveCloudMeta();
+      cloudBusy=false;
+      await pushCloudState(true);
+      return;
+    }
+    const remoteRev=Number(data.revision||0);
+    const knownRev=Number(cloudMeta.lastServerRevision||0);
+    const localDirty=cloudLocalHasUnsyncedChanges();
+    if(knownRev===0){
+      const localRev=Number(state?.meta?.revision||0);
+      if(localRev===0){
+        applyRemoteState(data);
+      }else{
+        const localTime=Date.parse(state?.meta?.updatedAt||0)||0;
+        const remoteTime=Date.parse(data?.state?.meta?.updatedAt||data.updated_at||0)||0;
+        if(remoteTime>=localTime)applyRemoteState(data);
+        else showCloudConflict(data);
+      }
+    }else if(remoteRev>knownRev){
+      if(localDirty)showCloudConflict(data);
+      else applyRemoteState(data);
+    }else if(localDirty){
+      cloudBusy=false;
+      await pushCloudState(false);
+      return;
+    }else{
+      cloudMeta.lastServerRevision=remoteRev;
+      cloudMeta.lastSyncedAt=data.updated_at||cloudMeta.lastSyncedAt;
+      saveCloudMeta();
+      setCloudStatus('synced');
+      if(Number(state?.meta?.revision||0)>Number(cloudMeta.lastSyncedStateRevision||0)){
+        setTimeout(()=>scheduleCloudSave(),120);
+      }
+    }
+  }catch(e){
+    console.error(e);
+    setCloudStatus(navigator.onLine?'error':'pending',navigator.onLine?'云同步：连接异常':'云同步：等待联网');
+  }finally{cloudBusy=false}
+}
+function scheduleCloudSave(){
+  if(!cloudClient||!cloudSession?.user)return;
+  clearTimeout(cloudSaveTimer);
+  setCloudStatus(navigator.onLine?'syncing':'pending');
+  cloudSaveTimer=setTimeout(()=>pushCloudState(false),900);
+}
+async function pushCloudState(force=false){
+  if(cloudBusy||!cloudClient||!cloudSession?.user)return;
+  if(!navigator.onLine){setCloudStatus('pending');return}
+  cloudBusy=true;setCloudStatus('syncing');
+  try{
+    const expected=Number(cloudMeta.lastServerRevision||0);
+    const payload={state:clone(state),updated_at:new Date().toISOString()};
+    let result;
+    if(expected===0){
+      result=await cloudClient.from(CLOUD_TABLE)
+        .insert({...payload,user_id:cloudSession.user.id,revision:1})
+        .select('revision,updated_at').single();
+      if(result.error&&result.error.code==='23505'){
+        const current=await fetchCloudRow();
+        if(current.data&&!force){showCloudConflict(current.data);return}
+        if(current.data&&force){
+          cloudMeta.lastServerRevision=Number(current.data.revision||0);
+          saveCloudMeta();
+          cloudBusy=false;
+          return await pushCloudState(true);
+        }
+      }
+    }else if(force){
+      result=await cloudClient.from(CLOUD_TABLE)
+        .update({...payload,revision:expected+1})
+        .eq('user_id',cloudSession.user.id)
+        .select('revision,updated_at').single();
+    }else{
+      result=await cloudClient.from(CLOUD_TABLE)
+        .update({...payload,revision:expected+1})
+        .eq('user_id',cloudSession.user.id)
+        .eq('revision',expected)
+        .select('revision,updated_at').maybeSingle();
+      if(!result.error&&!result.data){
+        const current=await fetchCloudRow();
+        if(current.data){showCloudConflict(current.data);return}
+      }
+    }
+    if(result?.error)throw result.error;
+    if(result?.data){
+      cloudMeta.lastServerRevision=Number(result.data.revision||expected+1);
+      cloudMeta.lastSyncedStateRevision=Number(state?.meta?.revision||0);
+      cloudMeta.lastSyncedAt=result.data.updated_at||new Date().toISOString();
+      saveCloudMeta();
+      setCloudStatus('synced');
+    }
+  }catch(e){
+    console.error(e);
+    setCloudStatus(navigator.onLine?'error':'pending',navigator.onLine?'云同步：保存失败':'云同步：等待联网');
+  }finally{cloudBusy=false}
+}
+async function pullCloudState(force=false){
+  if(!cloudClient||!cloudSession?.user)return;
+  if(!navigator.onLine){setCloudStatus('pending');return}
+  setCloudStatus('syncing');
+  const {data,error}=await fetchCloudRow();
+  if(error){console.error(error);setCloudStatus('error');return showToast('读取云端失败。')}
+  if(!data){setCloudStatus('synced');return showToast('云端还没有存档。')}
+  if(force||!cloudLocalHasUnsyncedChanges())applyRemoteState(data);
+  else showCloudConflict(data);
+}
+async function cloudSyncNow(){
+  if(cloudLocalHasUnsyncedChanges())await pushCloudState(false);
+  else await pullCloudState(false);
+  showToast(cloudStatus==='synced'?'☁️ 已同步到最新进度。':'请查看云同步状态。');
+}
+async function cloudPullNow(){
+  if(cloudLocalHasUnsyncedChanges()&&!confirm('这台设备有尚未同步的修改。继续会用云端版本替换当前本机状态。建议先保存进度文件。'))return;
+  await pullCloudState(true);
+  showToast('⬇️ 已读取云端版本。');
+}
+async function cloudPushNow(){
+  if(!confirm('确定用这台设备的当前存档覆盖云端吗？建议先点击“保存进度”下载一份备份。'))return;
+  if(Number(cloudMeta.lastServerRevision||0)===0){
+    const current=await fetchCloudRow();
+    if(current.data)cloudMeta.lastServerRevision=Number(current.data.revision||0);
+  }
+  await pushCloudState(true);
+  showToast('⬆️ 已用本机版本更新云端。');
+}
+async function resolveCloudConflict(choice){
+  const row=cloudConflictRemote;
+  byId('cloudConflictBox')?.classList.add('hidden');
+  cloudConflictRemote=null;
+  if(choice==='remote'){
+    applyRemoteState(row);
+    showToast('☁️ 已采用云端版本。');
+  }else{
+    cloudMeta.lastServerRevision=Number(row?.revision||0);
+    saveCloudMeta();
+    await pushCloudState(true);
+    showToast('💻 已采用本机版本并覆盖云端。');
+  }
+}
+window.addEventListener('online',()=>{if(cloudSession?.user)bootstrapCloudSync()});
+window.addEventListener('offline',()=>setCloudStatus('pending'));
+setInterval(()=>{if(cloudSession?.user&&navigator.onLine&&document.visibilityState==='visible')bootstrapCloudSync()},30000);
+
+
+
+// ===== Desktop Command Edition: UI-only analytics and planning =====
+let desktopChartRange=14;
+let desktopTaskFilter='open';
+
+function desktopDateOffset(days){
+  const d=new Date();
+  d.setHours(12,0,0,0);
+  d.setDate(d.getDate()+days);
+  return d.toISOString().slice(0,10);
+}
+function desktopDateLabel(dateStr){
+  if(!dateStr)return '未定';
+  const d=new Date(dateStr+'T12:00:00');
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+function desktopDayXP(dateStr){
+  const taskXP=state.tasks
+    .filter(t=>t.done&&t.date===dateStr)
+    .reduce((s,t)=>s+Number(t.xp||0),0);
+  const bossXP=state.bosses
+    .filter(b=>b.date===dateStr)
+    .reduce((s,b)=>s+Number(b.xp||0),0);
+  return taskXP+bossXP;
+}
+function desktopRecentXP(days){
+  let total=0;
+  for(let i=0;i<days;i++)total+=desktopDayXP(desktopDateOffset(-i));
+  return total;
+}
+function desktopTaskRewardsText(t){
+  const bits=[];
+  if(Number(t.xp||0))bits.push(`XP +${Number(t.xp||0)}`);
+  for(const [k,v] of Object.entries(t.rewards||{})){
+    if(Number(v||0)&&state.attributes[k])bits.push(`${state.attributes[k].icon}${state.attributes[k].name} +${Number(v)}`);
+  }
+  if(Number(t.intel||0))bits.push(`情报 +${Number(t.intel)}`);
+  if(Number(t.defense||0))bits.push(`防御 +${Number(t.defense)}`);
+  return bits.join(' · ')||'—';
+}
+function setDesktopChartRange(days){
+  desktopChartRange=Number(days)||14;
+  document.querySelectorAll('[data-chart-range]').forEach(b=>b.classList.toggle('active',Number(b.dataset.chartRange)===desktopChartRange));
+  renderDesktopActivityChart();
+}
+function setDesktopTaskFilter(filter){
+  desktopTaskFilter=filter;
+  document.querySelectorAll('[data-task-filter]').forEach(b=>b.classList.toggle('active',b.dataset.taskFilter===filter));
+  renderDesktopPlanner();
+}
+function renderDesktopCommandCenter(){
+  if(!byId('desktopLevelKpi'))return;
+  const li=levelInfo(state.xp);
+  const ri=currentRealmInfo();
+  const todayTasks=state.tasks.filter(t=>t.date===today());
+  const todayDone=todayTasks.filter(t=>t.done).length;
+  const rate=todayTasks.length?Math.round(todayDone/todayTasks.length*100):0;
+  const activeBosses=state.bosses.filter(b=>b.outcome!=='win');
+  const nextRealm=ri.next;
+
+  byId('desktopLevelKpi').textContent=`Lv. ${li.level}`;
+  byId('desktopLevelSub').textContent=li.isMax?'实力主线完成 · 世界主权者':`${li.era.icon} ${li.era.name} · 总 XP ${state.xp}`;
+  byId('desktopRealmKpi').textContent=`${ri.current.icon} ${ri.current.name}`;
+  byId('desktopRealmSub').textContent=nextRealm?`下一境界 ${nextRealm.name} · 定力 ${ri.points}/${nextRealm.min}`:'创世境 · 主线编辑器已开启';
+  byId('desktopWeekXpKpi').textContent=`${desktopRecentXP(7)} XP`;
+  byId('desktopWeekXpSub').textContent=`连续行动 ${state.streak||0} 天 · 累计完成 ${state.completedTotal||0}`;
+  byId('desktopTodayRateKpi').textContent=`${rate}%`;
+  byId('desktopTodayRateSub').textContent=`${todayDone} / ${todayTasks.length} 项完成`;
+  byId('desktopBossKpi').textContent=String(activeBosses.length);
+  byId('desktopBossSub').textContent=activeBosses.length?`最近：${activeBosses[activeBosses.length-1].name}`:'当前没有未击败 Boss';
+  byId('desktopRevisionKpi').textContent=`R${Number(state.meta?.revision||0)}`;
+  byId('desktopRevisionSub').textContent=cloudSession?.user
+    ?`云端 R${Number(cloudMeta.lastServerRevision||0)} · ${cloudStatus==='synced'?'已同步':'同步状态待检查'}`
+    :'当前仅本机缓存';
+
+  renderDesktopActivityChart();
+  renderDesktopRadar();
+  renderDesktopRegionBars();
+  renderDesktopRecommendations();
+  renderDesktopPlanner();
+  renderDesktopBossIntel();
+  renderDesktopRealmMatrix();
+  renderDesktopDataConsole();
+}
+function renderDesktopActivityChart(){
+  const box=byId('desktopActivityChart');
+  if(!box)return;
+  const rows=[];
+  for(let i=desktopChartRange-1;i>=0;i--){
+    const date=desktopDateOffset(-i);
+    rows.push({date,xp:desktopDayXP(date)});
+  }
+  const max=Math.max(20,...rows.map(x=>x.xp));
+  box.innerHTML=rows.map((r,idx)=>{
+    const h=Math.max(2,Math.round((r.xp/max)*155));
+    const showDate=desktopChartRange<=14||idx%3===0||idx===rows.length-1;
+    return `<div class="desktop-bar-column" title="${escapeHtml(r.date)} · ${r.xp} XP">
+      <div class="desktop-bar-value">${r.xp||''}</div>
+      <div class="desktop-bar" style="height:${h}px"></div>
+      <div class="desktop-bar-date">${showDate?escapeHtml(desktopDateLabel(r.date)):''}</div>
+    </div>`;
+  }).join('');
+}
+function renderDesktopRadar(){
+  const box=byId('desktopRadarChart');
+  if(!box)return;
+  const attrs=Object.values(state.attributes).slice(0,8);
+  if(attrs.length<3){
+    box.innerHTML='<div class="empty">至少需要 3 个属性才能形成雷达图。</div>';
+    return;
+  }
+  const w=430,h=330,cx=215,cy=165,r=118,n=attrs.length;
+  const point=(radius,i)=>{
+    const a=(-Math.PI/2)+(Math.PI*2*i/n);
+    return [cx+Math.cos(a)*radius,cy+Math.sin(a)*radius];
+  };
+  const grid=[.25,.5,.75,1].map(scale=>{
+    const pts=attrs.map((_,i)=>point(r*scale,i).map(v=>v.toFixed(1)).join(',')).join(' ');
+    return `<polygon points="${pts}" fill="none" stroke="rgba(88,111,157,.35)" stroke-width="1"/>`;
+  }).join('');
+  const axes=attrs.map((_,i)=>{
+    const [x,y]=point(r,i);
+    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(75,95,137,.30)" stroke-width="1"/>`;
+  }).join('');
+  const dataPts=attrs.map((a,i)=>point(r*clamp(Number(a.value||0),0,100)/100,i).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const labels=attrs.map((a,i)=>{
+    const [x,y]=point(r+34,i);
+    const anchor=x<cx-8?'end':x>cx+8?'start':'middle';
+    return `<text x="${x}" y="${y}" fill="#aab7d1" font-size="10" text-anchor="${anchor}" dominant-baseline="middle">${escapeHtml(a.icon)} ${escapeHtml(a.name)} ${Math.round(a.value)}</text>`;
+  }).join('');
+  box.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="角色属性雷达图">
+    ${grid}${axes}
+    <polygon points="${dataPts}" fill="rgba(77,215,255,.15)" stroke="#4dd7ff" stroke-width="2"/>
+    ${attrs.map((a,i)=>{const [x,y]=point(r*clamp(Number(a.value||0),0,100)/100,i);return `<circle cx="${x}" cy="${y}" r="3.5" fill="${escapeHtml(a.color||'#4dd7ff')}"/>`}).join('')}
+    ${labels}
+  </svg>`;
+}
+function renderDesktopRegionBars(){
+  const box=byId('desktopRegionBars');
+  if(!box)return;
+  const regions=Object.values(state.regions).sort((a,b)=>Number(b.progress||0)-Number(a.progress||0));
+  box.innerHTML=regions.map(r=>`<div class="desktop-region-row">
+    <div class="desktop-region-name" title="${escapeHtml(r.name)}">${escapeHtml(r.icon)} ${escapeHtml(r.name)}</div>
+    <div class="desktop-region-track"><div class="desktop-region-fill" style="width:${clamp(Number(r.progress||0),0,100)}%;background:linear-gradient(90deg,${escapeHtml(r.color||'#4dd7ff')},${hexToRgba(r.color||'#4dd7ff',.6)})"></div></div>
+    <div class="desktop-region-num">${Math.round(r.progress||0)}%</div>
+  </div>`).join('');
+}
+function desktopRecommendations(){
+  const list=[];
+  const ri=currentRealmInfo();
+  if(ri.next){
+    const missing=ri.next.requirements.filter(k=>!state.realm.flags[k]);
+    if(missing.length){
+      const m=REALM_MILESTONES[missing[0]];
+      list.push({icon:'🌊',title:`晋阶关键：${ri.next.name}`,text:m?.label||'完成下一项现实晋阶条件。'});
+    }else{
+      list.push({icon:'🌊',title:`晋阶准备完成`,text:`现实条件已经满足；继续积累 ${Math.max(0,ri.next.min-ri.points)} 定力即可进入 ${ri.next.name}。`});
+    }
+  }
+  const attrs=Object.values(state.attributes).sort((a,b)=>Number(a.value||0)-Number(b.value||0));
+  if(attrs[0])list.push({icon:attrs[0].icon,title:`最低属性：${attrs[0].name} ${Math.round(attrs[0].value)}`,text:'安排一个足够小、但能真实推进它的任务；弱项不必靠羞耻驱动。'});
+  const unresolved=[...state.bosses].filter(b=>b.outcome!=='win').sort((a,b)=>Number(b.id)-Number(a.id));
+  if(unresolved[0])list.push({icon:'👹',title:`Boss 下一回合：${unresolved[0].name}`,text:unresolved[0].note||`当前胜率约 ${unresolved[0].after}%；先补一条情报再开战。`});
+  const openToday=state.tasks.filter(t=>t.date===today()&&!t.done);
+  if(openToday.length)list.push({icon:'📜',title:`今日仍有 ${openToday.length} 个任务`,text:`最小可执行动作：${openToday[0].name}`});
+  if(!list.length)list.push({icon:'🌌',title:'当前没有系统性缺口',text:'你可以主动创建一条新主线，而不是等待系统分配任务。'});
+  return list.slice(0,4);
+}
+function renderDesktopRecommendations(){
+  const box=byId('desktopRecommendations');
+  if(!box)return;
+  const list=desktopRecommendations();
+  box.innerHTML=list.map(x=>`<div class="desktop-recommendation"><strong>${escapeHtml(x.icon)} ${escapeHtml(x.title)}</strong><p>${escapeHtml(x.text)}</p></div>`).join('');
+  const li=levelInfo(state.xp),ri=currentRealmInfo();
+  const topRegion=Object.values(state.regions).sort((a,b)=>Number(b.progress||0)-Number(a.progress||0))[0];
+  const snapshot=`你目前处于实力 Lv.${li.level}「${li.title}」与 ${ri.current.icon}${ri.current.name}。最成熟的世界区域是${topRegion?`${topRegion.icon}${topRegion.name}（${Math.round(topRegion.progress)}%）`:'尚未形成'}。近 7 日获得 ${desktopRecentXP(7)} XP，当前有 ${state.tasks.filter(t=>t.date===today()&&!t.done).length} 个今日任务和 ${state.bosses.filter(b=>b.outcome!=='win').length} 个活跃 Boss。`;
+  byId('desktopSnapshotText').textContent=snapshot;
+}
+async function copyStrategicSnapshot(){
+  const text=byId('desktopSnapshotText')?.textContent||'';
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast('📋 战略快照已复制。');
+  }catch(e){
+    showToast('浏览器未允许复制，请手动选择文字。');
+  }
+}
+function populateDesktopTaskRegions(){
+  const select=byId('desktopTaskRegion');
+  if(!select)return;
+  const old=select.value;
+  select.innerHTML=Object.values(state.regions).map(r=>`<option value="${escapeHtml(r.id)}">${escapeHtml(r.icon)} ${escapeHtml(r.name)}</option>`).join('');
+  if(old&&state.regions[old])select.value=old;
+}
+function createDesktopQuickTask(){
+  const name=byId('desktopTaskName').value.trim();
+  if(!name)return showToast('先写任务名称。');
+  const region=byId('desktopTaskRegion').value||Object.keys(state.regions)[0]||'';
+  const date=byId('desktopTaskDate').value||today();
+  const xp=Math.max(0,Number(byId('desktopTaskXP').value||0));
+  state.tasks.push({
+    id:makeId('task'),
+    kind:'temporary',
+    name,region,xp,
+    rewards:{},
+    intel:0,defense:0,
+    done:false,date,
+    lastCompletedDate:null,
+    repeatDate:null,
+    repeatCount:0
+  });
+  byId('desktopTaskName').value='';
+  save();
+  showToast('📜 已加入任务规划台，并将同步到手机版。');
+}
+function renderDesktopPlanner(){
+  const body=byId('desktopPlannerBody');
+  if(!body)return;
+  populateDesktopTaskRegions();
+  if(byId('desktopTaskDate')&&!byId('desktopTaskDate').value)byId('desktopTaskDate').value=today();
+  refreshRecurringTasks();let list=[...state.tasks];
+  if(desktopTaskFilter==='open')list=list.filter(t=>!t.done);
+  if(desktopTaskFilter==='today')list=list.filter(t=>t.date===today());
+  if(desktopTaskFilter==='upcoming')list=list.filter(t=>!t.done&&String(t.date||'')>today());
+  if(desktopTaskFilter==='done')list=list.filter(t=>t.done);
+  list.sort((a,b)=>{
+    if(Boolean(a.done)!==Boolean(b.done))return a.done?1:-1;
+    return String(a.date||'').localeCompare(String(b.date||''))||String(a.name||'').localeCompare(String(b.name||''));
+  });
+  byId('desktopPlannerSummary').textContent=`显示 ${list.length} 项 · 全部任务 ${state.tasks.length} 项`;
+  body.innerHTML=list.length?list.map(t=>{
+    const region=state.regions[t.region];
+    const status=t.kind==='repeatable'
+      ?`♾️ 今日已结算 ${Number(t.repeatCount||0)} 次`
+      :t.done?'✓ 已完成'
+      :String(t.date||'')<today()?'逾期待处理'
+      :t.date===today()?(t.kind==='routine'?'🔁 今日常规':'今天')
+      :'计划中';
+    return `<tr class="${t.done?'is-done':''}">
+      <td>${escapeHtml(t.date||'未定')}</td>
+      <td><div class="desktop-table-title">${escapeHtml(t.name)} ${(()=>{const k=taskKindInfo(t.kind);const cls=t.kind==='routine'?'routine':(t.kind==='repeatable'?'repeatable':'');return `<span class="task-kind-badge ${cls}">${k.icon} ${k.label}</span>`})()}</div></td>
+      <td>${region?`${escapeHtml(region.icon)} ${escapeHtml(region.name)}`:'—'}</td>
+      <td>${escapeHtml(desktopTaskRewardsText(t))}</td>
+      <td>${escapeHtml(status)}</td>
+      <td><div class="desktop-table-actions">
+        ${t.done&&t.kind!=='repeatable'?'':`<button class="desktop-mini-btn complete" onclick="completeTask('${escapeHtml(t.id)}',event)">${t.kind==='repeatable'?'再次结算':'完成'}</button>`}
+        <button class="desktop-mini-btn delete" onclick="deleteTask('${escapeHtml(t.id)}')">删除</button>
+      </div></td>
+    </tr>`;
+  }).join(''):'<tr><td colspan="6"><div class="empty">当前筛选下没有任务。</div></td></tr>';
+}
+function renderDesktopBossIntel(){
+  const box=byId('desktopBossIntel');
+  if(!box)return;
+  const bosses=[...state.bosses].sort((a,b)=>Number(b.id)-Number(a.id)).slice(0,6);
+  box.innerHTML=bosses.length?bosses.map(b=>{
+    const outcome=b.outcome==='win'?'已击败':b.outcome==='progress'?'机制已解锁':'尚未击败';
+    return `<div class="desktop-boss-intel-card">
+      <strong>${escapeHtml(bossIcon(b.type))} ${escapeHtml(b.name)}</strong>
+      <p>${escapeHtml(b.note||'尚未记录 Boss 机制。')}</p>
+      <div class="desktop-boss-intel-meta"><span>${escapeHtml(outcome)}</span><span>${Number(b.before||0)}% → ${Number(b.after||0)}%</span></div>
+    </div>`;
+  }).join(''):'<div class="empty">还没有 Boss 战报。</div>';
+}
+function renderDesktopRealmMatrix(){
+  const box=byId('desktopRealmMatrix');
+  if(!box)return;
+  const info=currentRealmInfo();
+  box.innerHTML=LIFE_REALMS.map((r,i)=>{
+    const cls=i<info.index?'done':i===info.index?'current':'';
+    const complete=r.requirements.filter(k=>state.realm.flags[k]).length;
+    const req=r.requirements.length;
+    return `<div class="desktop-realm-cell ${cls}">
+      <span>${i<info.index?'✓ 已通过':i===info.index?'● 当前境界':`○ ${r.min} 定力`}</span>
+      <strong>${r.icon} ${escapeHtml(r.name)}</strong>
+      <p>${escapeHtml(r.philosophy)}</p>
+      <span style="display:block;margin-top:8px">条件 ${complete}/${req||0}</span>
+    </div>`;
+  }).join('');
+}
+function renderDesktopDataConsole(){
+  const box=byId('desktopDataConsole');
+  if(!box)return;
+  const updated=state.meta?.updatedAt?new Date(state.meta.updatedAt).toLocaleString('zh-CN'):'尚未修改';
+  const synced=cloudMeta.lastSyncedAt?new Date(cloudMeta.lastSyncedAt).toLocaleString('zh-CN'):'尚未同步';
+  const cells=[
+    ['数据结构版本',state.version||'5.2'],
+    ['本机 state 修订',`R${Number(state.meta?.revision||0)}`],
+    ['云端行修订',cloudSession?.user?`R${Number(cloudMeta.lastServerRevision||0)}`:'未登录'],
+    ['最近本机修改',updated],
+    ['最近云同步',synced],
+    ['任务 / Boss',`${state.tasks.length} / ${state.bosses.length}`],
+    ['属性 / 区域',`${Object.keys(state.attributes).length} / ${Object.keys(state.regions).length}`],
+    ['云端表',CLOUD_TABLE]
+  ];
+  box.innerHTML=cells.map(([k,v])=>`<div class="desktop-data-cell"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong></div>`).join('');
+}
+
+
+function toggleDesktopSidebar(){
+  if(window.innerWidth<1320){
+    document.body.classList.toggle('desktop-sidebar-open');
+  }else{
+    document.body.classList.toggle('desktop-sidebar-collapsed');
+    localStorage.setItem('ck_desktop_sidebar_collapsed',document.body.classList.contains('desktop-sidebar-collapsed')?'1':'0');
+  }
+}
+function closeDesktopSidebar(){
+  document.body.classList.remove('desktop-sidebar-open');
+  if(window.innerWidth>=1320){
+    document.body.classList.add('desktop-sidebar-collapsed');
+    localStorage.setItem('ck_desktop_sidebar_collapsed','1');
+  }
+}
+function initDesktopSidebar(){
+  if(window.innerWidth>=1320&&localStorage.getItem('ck_desktop_sidebar_collapsed')==='1'){
+    document.body.classList.add('desktop-sidebar-collapsed');
+  }
+  document.querySelectorAll('.desktop-side-nav a').forEach(a=>a.addEventListener('click',()=>{
+    if(window.innerWidth<1320)document.body.classList.remove('desktop-sidebar-open');
+  }));
+}
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>=1320)document.body.classList.remove('desktop-sidebar-open');
+});
+
+function safeFilenameTime(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`}
+function downloadBlob(content,type,filename){const blob=content instanceof Blob?content:new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1200)}
+function markFileBackedUp(){state.meta=state.meta||clone(defaultState.meta);state.meta.lastFileBackupRevision=Number(state.meta.revision||0);state.meta.lastFileBackupAt=new Date().toISOString();persistStateOnly()}
+function saveCheckpoint(){
+  // First force the latest in-memory state into both browser stores, then create a physical save file.
+  state.meta=state.meta||clone(defaultState.meta);state.meta.updatedAt=new Date().toISOString();persistStateOnly();markFileBackedUp();
+  downloadBlob(JSON.stringify(state,null,2),'application/json',`CK_Life_Engine_Save_${safeFilenameTime()}.cksave.json`);showToast('💾 已保存到文件。请保留刚下载的存档。')
+}
+function exportSave(){saveCheckpoint()}
+function exportSnapshotHtml(){
+  state.meta=state.meta||clone(defaultState.meta);state.meta.updatedAt=new Date().toISOString();persistStateOnly();markFileBackedUp();
+  const holder=byId('embeddedSave');const old=holder.textContent;holder.textContent=JSON.stringify(state).replace(/<\/script/gi,'<\\/script');
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;holder.textContent=old;
+  downloadBlob(html,'text/html;charset=utf-8',`CK_Life_Engine_v5_With_Progress_${safeFilenameTime()}.html`);showToast('📦 已生成带当前进度的新 HTML。')
+}
+function updateSaveStatus(){
+  const box=byId('saveStatus');if(!box)return;
+  const rev=Number(state?.meta?.revision||0),back=Number(state?.meta?.lastFileBackupRevision||0);
+  const cloudBack=cloudSession?.user?Number(cloudMeta.lastSyncedStateRevision||0):0;
+  const protectedRevision=Math.max(back,cloudBack);
+  const isProtected=protectedRevision>=rev&&rev>0;
+  box.classList.toggle('backed',isProtected);
+  if(cloudSession?.user&&cloudBack>=rev&&rev>0){
+    byId('saveStatusMain').textContent='☁️ 当前进度已同步到云端';
+    const when=cloudMeta.lastSyncedAt?new Date(cloudMeta.lastSyncedAt).toLocaleString('zh-CN'):'刚刚';
+    byId('saveStatusSub').textContent=`本机双重存储仍然保留。最近云同步：${when}`;
+  }else if(back>=rev&&rev>0){
+    byId('saveStatusMain').textContent='✅ 当前进度已经保存到文件';
+    const when=state?.meta?.lastFileBackupAt?new Date(state.meta.lastFileBackupAt).toLocaleString('zh-CN'):'刚刚';
+    byId('saveStatusSub').textContent=`最近文件存档：${when}`;
+  }else{
+    byId('saveStatusMain').textContent=cloudSession?.user?'⏳ 当前修改正在等待云同步':'⚠️ 当前进度仅自动保存在这台设备';
+    const when=state?.meta?.lastFileBackupAt?new Date(state.meta.lastFileBackupAt).toLocaleString('zh-CN'):'从未做过文件级保存';
+    byId('saveStatusSub').textContent=cloudSession?.user?'联网后会自动同步；也可以手动下载存档。':`建议定期点击“保存进度”。最近文件存档：${when}`;
+  }
+}
+function triggerImport(){byId('importFile').click()}
+function importSaveFile(event){const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{state=migrateLegacy(JSON.parse(reader.result));state.meta=state.meta||clone(defaultState.meta);state.meta.revision=Number(state.meta.revision||0)+1;state.meta.updatedAt=new Date().toISOString();state.meta.lastFileBackupRevision=state.meta.revision;state.meta.lastFileBackupAt=new Date().toISOString();persistStateOnly();render();showToast('✅ 存档导入成功，并已写入双重浏览器存储。')}catch(e){showToast('这个存档文件无法读取。')}event.target.value=''};reader.readAsText(file)}
+function resetAll(){if(confirm('确定重置全部 Life Engine 数据吗？建议先点击“保存进度”备份。')){state=clone(defaultState);save();showToast('已恢复初始世界。')}}
+
+async function requestPersistentStorage(){try{if(navigator.storage?.persist)await navigator.storage.persist()}catch(e){}}
+async function recoverFromIndexedDB(){const idb=await loadFromIndexedDB();if(idb&&stateStamp(idb)>stateStamp(state)){state=idb;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){};render();generateDailyReport(false);showToast('🛟 已从备用浏览器存储恢复了较新的进度。')}updateSaveStatus()}
+window.addEventListener('beforeunload',e=>{try{persistStateOnly()}catch(err){};const rev=Number(state?.meta?.revision||0),back=Math.max(Number(state?.meta?.lastFileBackupRevision||0),cloudSession?.user?Number(cloudMeta.lastSyncedStateRevision||0):0);if(rev>back){e.preventDefault();e.returnValue='';return ''}});
+window.addEventListener('pagehide',()=>{try{persistStateOnly()}catch(e){}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{persistStateOnly()}catch(e){}}});
+
+['taskModal','bossModal','eventModal','insightModal','settingsModal','cloudModal'].forEach(id=>byId(id).addEventListener('click',e=>{if(e.target.id===id)closeModal(id)}));
+(async function boot(){
+  state=load();render();generateDailyReport(false);updateSaveStatus();requestPersistentStorage();
+  applyMobileView();
+  await recoverFromIndexedDB();
+  applyMobileView();
+  await initCloud();
+  if('serviceWorker' in navigator&&location.protocol==='https:'){
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  }
+})();
+</script>
+</body>
+</html>
